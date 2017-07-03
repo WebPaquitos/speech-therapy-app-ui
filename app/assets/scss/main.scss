@@ -1,5 +1,25 @@
-$color: #262828;
+$text-color: #262828;
 
-body {
-  color: $color;
+.container {
+    height: 100vh;
+    color: $text-color;
+}
+
+.sidebar {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+
+.content {
+    padding-top: 150px;
+    height: 100%;
+    > .row {
+        height: 100%;
+    }
+}
+
+.sidebar-ct {
+    text-align: center;
+    padding: 15px;
 }
