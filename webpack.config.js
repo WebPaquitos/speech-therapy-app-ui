@@ -76,6 +76,9 @@ const config = {
                 eslint: {
                     configFile: resolve(__dirname, '.eslintrc'),
                     cache: false,
+                    failOnWarning: false,
+                    failOnError: false,
+                    emitWarning: true,
                 },
             },
         }),
