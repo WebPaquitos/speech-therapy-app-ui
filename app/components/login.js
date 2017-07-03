@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Jumbotron, Button, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
 import { FaUser, FaLock } from 'react-icons/lib/fa';
 import { loginUser } from '../actions/index';
+import { ROUTES } from '../common/constants';
 
 class Login extends Component {
     constructor(props) {
@@ -20,7 +21,9 @@ class Login extends Component {
     }
 
     onLoginClicked() {
-        this.props.loginUser(this.state);
+        this.props.loginUser(this.state, () => {
+            this.props.history.push(ROUTES.DASHBOARD);
+        });
     }
 
     render() {
