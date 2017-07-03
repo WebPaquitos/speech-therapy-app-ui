@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import ReactSidebar from 'react-sidebar';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Button, ListGroup, ListGroupItem } from 'reactstrap';
 import { FaBars } from 'react-icons/lib/fa';
 import avatar from '../assets/img/avatar.png';
+import { ROUTES } from '../common/constants';
 
 const mql = window.matchMedia('(min-width: 768px)');
 
@@ -106,7 +108,7 @@ class Sidebar extends Component {
                 <br/>
                 <br/>
                 <div className={`push-down ${invisible}`}>
-                    <Button color="primary">New Evaluation</Button>
+                    <Link className="btn btn-primary" to={ROUTES.NEW_EVALUATION}>New Evaluation</Link>
                 </div>
                 <ListGroup className={`${invisible}`}>
                     <ListGroupItem><Button color="link" block>Patients</Button></ListGroupItem>

@@ -4,7 +4,9 @@ import { Container } from 'reactstrap';
 import Login from './login';
 import Home from './home';
 import Dashboard from './dashboard';
+import NewEvaluation from '../components/new_evaluation';
 import Sidebar from '../containers/sidebar';
+import { ROUTES } from '../common/constants';
 
 class Root extends Component {
     render() {
@@ -14,9 +16,10 @@ class Root extends Component {
                     <Sidebar/>
                     <Container>
                         <Switch>
-                            <Route exact path="/" component={Home}/>
-                            <Route path="/login" component={Login}/>
-                            <Route path="/dashboard" component={Dashboard}/>
+                            <Route exact path={ROUTES.BASE} component={Home}/>
+                            <Route path={ROUTES.LOGIN} component={Login}/>
+                            <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
+                            <Route path={ROUTES.NEW_EVALUATION} component={NewEvaluation}/>
                         </Switch>
                     </Container>
                 </div>
