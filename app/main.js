@@ -4,10 +4,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { AppContainer } from 'react-hot-loader';
+import Promise from 'redux-promise';
 import Root from './components/root';
 import reducers from './reducers';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const createStoreWithMiddleware = applyMiddleware(Promise)(createStore);
 
 const render = (Component) => {
     ReactDOM.render(

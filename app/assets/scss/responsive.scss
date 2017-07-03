@@ -1,0 +1,7 @@
+$sidebar-size: 250px;
+
+@media (min-width: 768px) {
+    .content {
+        margin-left: $sidebar-size !important;
+    }
+}

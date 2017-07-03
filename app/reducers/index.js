@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import SessionReducer from './reducer_session';
 
 const rootReducer = combineReducers({
-    posts: () => { return {}; },
+    session: SessionReducer,
 });
 
 export default rootReducer;

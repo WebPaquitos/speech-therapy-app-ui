@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactSidebar from 'react-sidebar';
-import { Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import { Button, ListGroup, ListGroupItem } from 'reactstrap';
 import { FaBars } from 'react-icons/lib/fa';
+import avatar from '../assets/img/avatar.png';
 
 const mql = window.matchMedia('(min-width: 768px)');
 
@@ -43,6 +45,7 @@ class Sidebar extends Component {
     }
 
     render() {
+        const { isLogged, user } = this.props.session;
         const sidebarContentStyle = {
             root: {
                 position: 'absolute',
@@ -51,7 +54,7 @@ class Sidebar extends Component {
                 right: 0,
                 bottom: 0,
                 overflow: 'hidden',
-                zIndex: 3,
+                zIndex: 1,
             },
             sidebar: {
                 zIndex: 4,
@@ -94,8 +97,22 @@ class Sidebar extends Component {
                 bottom: 0,
             },
         };
+        const invisible = !isLogged ? 'invisible' : '';
         const sidebarContent = (
-            <b>Sidebar content</b>
+            <div>
+                <img src={avatar} alt="login" className="img-fluid mx-auto d-block"/>
+                <br/>
+                <h2>{isLogged ? user.name : 'Please Login'}</h2>
+                <br/>
+                <br/>
+                <div className={`push-down ${invisible}`}>
+                    <Button color="primary">New Evaluation</Button>
+                </div>
+                <ListGroup className={`${invisible}`}>
+                    <ListGroupItem><Button color="link" block>Patients</Button></ListGroupItem>
+                    <ListGroupItem><Button color="link" block>Evaluation History</Button></ListGroupItem>
+                </ListGroup>
+            </div>
         );
 
         return (
@@ -114,4 +131,10 @@ class Sidebar extends Component {
     }
 }
 
-export default Sidebar;
+function mapStateToProps({ session }) {
+    return {
+        session,
+    };
+}
+
+export default connect(mapStateToProps)(Sidebar);
