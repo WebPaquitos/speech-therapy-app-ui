@@ -97,7 +97,7 @@ function validate(values) {
         errors.email = 'Enter an email';
     }
     if (!values.password) {
-        errors.password = 'Enter a password';
+        errors.password = 'Enter password';
     }
 
     return errors;

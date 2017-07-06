@@ -38,8 +38,8 @@ export function logoutUser(data) {
     };
 }
 
-export function registerUser({ email, password }, callback) {
-    // const registeringUser = axios.post(`${API_ENDPOINT}/register`, { email, password });
+export function registerUser({ name, email, password }, callback) {
+    // const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password });
     // return {
     //     type: REGISTER_USER,
     //     payload: registeringUser,

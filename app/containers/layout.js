@@ -128,7 +128,7 @@ class Layout extends Component {
                 </div>
                 <ListGroup className={`${invisible}`}>
                     <ListGroupItem><Button color="link" block>Patients</Button></ListGroupItem>
-                    <ListGroupItem><Button color="link" block>Evaluation History</Button></ListGroupItem>
+                    <ListGroupItem><Button color="link" block>History</Button></ListGroupItem>
                 </ListGroup>
                 <div className={`text-center bottom ${invisible}`}>
                     <Link

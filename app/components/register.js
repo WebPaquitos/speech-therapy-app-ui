@@ -55,6 +55,14 @@ class Register extends Component {
                         <Jumbotron className="small-form">
                             <form onSubmit={handleSubmit(this.onRegisterClicked)}>
                                 <Field
+                                    name="name"
+                                    placeholder="enter name"
+                                    type="text"
+                                    icon={FaUser}
+                                    component={this.renderField}
+                                />
+                                <br/>
+                                <Field
                                     name="email"
                                     placeholder="enter email"
                                     type="email"
@@ -100,11 +108,14 @@ class Register extends Component {
 function validate(values) {
     const errors = {};
 
+    if (!values.name) {
+        errors.name = 'Enter name';
+    }
     if (!values.email) {
         errors.email = 'Enter an email';
     }
     if (!values.password) {
-        errors.password = 'Enter a password';
+        errors.password = 'Enter password';
     }
     if (!values.cpassword) {
         errors.cpassword = 'Confirm your password';
