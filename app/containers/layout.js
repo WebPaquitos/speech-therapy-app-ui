@@ -7,9 +7,11 @@ import { FaBars } from 'react-icons/lib/fa';
 import avatar from '../assets/img/avatar.png';
 import { ROUTES } from '../common/constants';
 import Login from '../components/login';
+import Logout from './logout';
 import Home from '../components/home';
 import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
+import { logoutUser } from '../actions/index';
 
 const mql = window.matchMedia('(min-width: 768px)');
 
@@ -128,6 +130,13 @@ class Layout extends Component {
                     <ListGroupItem><Button color="link" block>Patients</Button></ListGroupItem>
                     <ListGroupItem><Button color="link" block>Evaluation History</Button></ListGroupItem>
                 </ListGroup>
+                <div className={`text-center bottom ${invisible}`}>
+                    <Link
+                        className="btn btn-link"
+                        to={ROUTES.LOGOUT}>
+                        Logout
+                    </Link>
+                </div>
             </div>
         );
 
@@ -147,6 +156,7 @@ class Layout extends Component {
                         <Switch>
                             <Route exact path={ROUTES.BASE} component={Home}/>
                             <Route path={ROUTES.LOGIN} component={Login}/>
+                            <Route path={ROUTES.LOGOUT} component={Logout}/>
                             <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
                             <Route path={ROUTES.NEW_EVALUATION} component={NewEvaluation}/>
                         </Switch>
@@ -163,4 +173,4 @@ function mapStateToProps({ session }) {
     };
 }
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps, { logoutUser })(Layout);

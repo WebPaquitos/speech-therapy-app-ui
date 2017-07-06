@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { AppContainer } from 'react-hot-loader';
 import Promise from 'redux-promise';
-import Root from './components/root';
+import Layout from './containers/layout';
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(Promise)(createStore);
@@ -21,11 +21,11 @@ const render = (Component) => {
     );
 };
 
-render(Root);
+render(Layout);
 
 if (module.hot) {
-    module.hot.accept('./components/root', () => {
-        const newApp = require('./components/root').default;
+    module.hot.accept('./containers/layout', () => {
+        const newApp = require('./containers/layout').default;
         render(newApp);
     });
 }
