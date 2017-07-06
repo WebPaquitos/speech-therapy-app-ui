@@ -159,7 +159,7 @@ class Layout extends Component {
                                 path={ROUTES.BASE}
                                 render={() => (
                                     isLogged ? (<Redirect to={ROUTES.DASHBOARD}/>) : (<Redirect to={ROUTES.LOGIN}/>)
-                            )}/>
+                                )}/>
                             <Route path={ROUTES.LOGIN} component={Login}/>
                             <Route path={ROUTES.LOGOUT} component={Logout}/>
                             <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
