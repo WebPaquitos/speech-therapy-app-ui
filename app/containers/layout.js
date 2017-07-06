@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import ReactSidebar from 'react-sidebar';
+import Sidebar from 'react-sidebar';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Button, ListGroup, ListGroupItem } from 'reactstrap';
+import { Link, BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Button, ListGroup, ListGroupItem, Container } from 'reactstrap';
 import { FaBars } from 'react-icons/lib/fa';
 import avatar from '../assets/img/avatar.png';
 import { ROUTES } from '../common/constants';
+import Login from '../components/login';
+import Home from '../components/home';
+import Dashboard from '../components/dashboard';
+import NewEvaluation from '../components/new_evaluation';
 
 const mql = window.matchMedia('(min-width: 768px)');
 
-class Sidebar extends Component {
+class Layout extends Component {
     constructor(props) {
         super(props);
         const { docked, open } = props;
@@ -23,6 +27,7 @@ class Sidebar extends Component {
         this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
         this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
         this.onSetSidebarOpenClicked = this.onSetSidebarOpenClicked.bind(this);
+        this.onSidebarActionClicked = this.onSidebarActionClicked.bind(this);
     }
 
     componentWillMount() {
@@ -40,6 +45,10 @@ class Sidebar extends Component {
 
     onSetSidebarOpenClicked() {
         this.setState({ sidebarOpen: !this.state.sidebarOpen });
+    }
+
+    onSidebarActionClicked() {
+        this.onSetSidebarOpenClicked();
     }
 
     mediaQueryChanged() {
@@ -108,7 +117,12 @@ class Sidebar extends Component {
                 <br/>
                 <br/>
                 <div className={`push-down ${invisible}`}>
-                    <Link className="btn btn-primary" to={ROUTES.NEW_EVALUATION}>New Evaluation</Link>
+                    <Link
+                        className="btn btn-primary"
+                        to={ROUTES.NEW_EVALUATION}
+                        onClick={this.onSidebarActionClicked}>
+                        New Evaluation
+                    </Link>
                 </div>
                 <ListGroup className={`${invisible}`}>
                     <ListGroupItem><Button color="link" block>Patients</Button></ListGroupItem>
@@ -118,17 +132,27 @@ class Sidebar extends Component {
         );
 
         return (
-            <ReactSidebar
-                sidebar={sidebarContent}
-                open={this.state.sidebarOpen}
-                docked={this.state.sidebarDocked}
-                onSetOpen={this.onSetSidebarOpen}
-                sidebarClassName="sidebar-ct"
-                styles={sidebarContentStyle}>
-                <div className="hidden-md-up">
-                    <Button color="link" size="lg" onClick={this.onSetSidebarOpenClicked}><FaBars/></Button>
-                </div>
-            </ReactSidebar>
+            <BrowserRouter>
+                <Sidebar
+                    sidebar={sidebarContent}
+                    open={this.state.sidebarOpen}
+                    docked={this.state.sidebarDocked}
+                    onSetOpen={this.onSetSidebarOpen}
+                    sidebarClassName="sidebar-ct"
+                    styles={sidebarContentStyle}>
+                    <div className="hidden-md-up">
+                        <Button color="link" size="lg" onClick={this.onSetSidebarOpenClicked}><FaBars/></Button>
+                    </div>
+                    <Container>
+                        <Switch>
+                            <Route exact path={ROUTES.BASE} component={Home}/>
+                            <Route path={ROUTES.LOGIN} component={Login}/>
+                            <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
+                            <Route path={ROUTES.NEW_EVALUATION} component={NewEvaluation}/>
+                        </Switch>
+                    </Container>
+                </Sidebar>
+            </BrowserRouter>
         );
     }
 }
@@ -139,4 +163,4 @@ function mapStateToProps({ session }) {
     };
 }
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps)(Layout);

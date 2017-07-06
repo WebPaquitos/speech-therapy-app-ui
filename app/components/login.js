@@ -30,7 +30,12 @@ class Login extends Component {
         return (
             <div className="content">
                 <Row>
-                    <Col xs={{ size: 8, push: 2 }} sm={{ size: 8, push: 2 }} md={{ size: 8, push: 2 }} lg={{ size: 6, push: 3 }}>
+                    <Col
+                        xs={{ size: 8, push: 2 }}
+                        sm={{ size: 8, push: 2 }}
+                        md={{ size: 8, push: 2 }}
+                        lg={{ size: 6, push: 3 }}
+                        xl={{ size: 4, push: 4 }}>
                         <Jumbotron>
                             <InputGroup>
                                 <InputGroupAddon><FaUser/></InputGroupAddon>
