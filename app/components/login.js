@@ -47,9 +47,9 @@ class Login extends Component {
             <div className="content">
                 <Row>
                     <Col
-                        xs={{ size: 8, push: 2 }}
-                        sm={{ size: 8, push: 2 }}
-                        md={{ size: 8, push: 2 }}
+                        xs={{ size: 12 }}
+                        sm={{ size: 12 }}
+                        md={{ size: 12 }}
                         lg={{ size: 6, push: 3 }}
                         xl={{ size: 4, push: 4 }}>
                         <Jumbotron className="small-form">

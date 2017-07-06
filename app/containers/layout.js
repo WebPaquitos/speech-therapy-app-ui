@@ -13,7 +13,7 @@ import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
 import { logoutUser } from '../actions/index';
 
-const mql = window.matchMedia('(min-width: 768px)');
+const mql = window.matchMedia('(min-width: 992px)');
 
 class Layout extends Component {
     constructor(props) {
@@ -79,7 +79,7 @@ class Layout extends Component {
                 willChange: 'transform',
                 overflowY: 'auto',
                 backgroundColor: 'rgba(250,250,250,1)',
-                width: '250px',
+                width: '400px',
             },
             content: {
                 position: 'absolute',
@@ -150,7 +150,7 @@ class Layout extends Component {
                     onSetOpen={this.onSetSidebarOpen}
                     sidebarClassName="sidebar-ct"
                     styles={sidebarContentStyle}>
-                    <div className="hidden-md-up">
+                    <div className="hidden-lg-up">
                         <Button color="link" size="lg" onClick={this.onSetSidebarOpenClicked}><FaBars/></Button>
                     </div>
                     <Container>

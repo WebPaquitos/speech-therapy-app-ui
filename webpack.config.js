@@ -27,6 +27,8 @@ const config = {
         historyApiFallback: true,
         contentBase: resolve(__dirname, 'build'),
         publicPath: '/',
+        host: '0.0.0.0',
+        disableHostCheck: true,
     },
 
     module: {
