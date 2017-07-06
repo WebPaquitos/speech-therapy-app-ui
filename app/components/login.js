@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Button, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
+import { Jumbotron, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
 import { FaUser, FaLock } from 'react-icons/lib/fa';
 import { loginUser } from '../actions/index';
 import { ROUTES } from '../common/constants';
@@ -9,27 +10,39 @@ import { ROUTES } from '../common/constants';
 class Login extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            username: '',
-            password: '',
-        };
-
         this.onLoginClicked = this.onLoginClicked.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
+        this.renderField = this.renderField.bind(this);
     }
 
-    onInputChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
-    onLoginClicked() {
-        this.props.loginUser(this.state, () => {
+    onLoginClicked(values) {
+        this.props.loginUser(values, () => {
             this.props.history.push(ROUTES.DASHBOARD);
         });
     }
 
+    renderField(field) {
+        const { input, placeholder, icon, type, meta: { touched, error } } = field;
+        return (
+            <div className={`form-group ${touched && error ? 'has-danger' : ''}`}>
+                <InputGroup>
+                    <InputGroupAddon>
+                        {icon()}
+                    </InputGroupAddon>
+                    <Input
+                        className="form-control"
+                        placeholder={placeholder}
+                        type={type}
+                        {...input}/>
+                </InputGroup>
+                <div className="text-sm-left text-danger">
+                    {touched ? error : ''}
+                </div>
+            </div>
+        );
+    }
+
     render() {
+        const { handleSubmit } = this.props;
         return (
             <div className="content">
                 <Row>
@@ -40,32 +53,27 @@ class Login extends Component {
                         lg={{ size: 6, push: 3 }}
                         xl={{ size: 4, push: 4 }}>
                         <Jumbotron className="small-form">
-                            <InputGroup>
-                                <InputGroupAddon>
-                                    <FaUser/>
-                                </InputGroupAddon>
-                                <Input
-                                    name="username"
-                                    placeholder="username"
-                                    value={this.state.username}
-                                    onChange={this.onInputChange}/>
-                            </InputGroup>
-                            <br/>
-                            <InputGroup>
-                                <InputGroupAddon>
-                                    <FaLock/>
-                                </InputGroupAddon>
-                                <Input
+                            <form onSubmit={handleSubmit(this.onLoginClicked)}>
+                                <Field
+                                    name="email"
+                                    placeholder="email"
+                                    type="email"
+                                    icon={FaUser}
+                                    component={this.renderField}
+                                />
+                                <br/>
+                                <Field
                                     name="password"
                                     placeholder="password"
                                     type="password"
-                                    value={this.state.password}
-                                    onChange={this.onInputChange}/>
-                            </InputGroup>
-                            <br/>
-                            <p className="lead d-flex justify-content-end">
-                                <Button color="link" onClick={this.onLoginClicked}>Login</Button>
-                            </p>
+                                    icon={FaLock}
+                                    component={this.renderField}
+                                />
+                                <br/>
+                                <p className="lead d-flex justify-content-end">
+                                    <button type="submit" className="btn btn-link">Login</button>
+                                </p>
+                            </form>
                         </Jumbotron>
                         <div className="d-flex justify-content-end">
                             <Link
@@ -81,4 +89,23 @@ class Login extends Component {
     }
 }
 
-export default connect(null, { loginUser })(Login);
+
+function validate(values) {
+    const errors = {};
+
+    if (!values.email) {
+        errors.email = 'Enter an email';
+    }
+    if (!values.password) {
+        errors.password = 'Enter a password';
+    }
+
+    return errors;
+}
+
+export default reduxForm({
+    validate,
+    form: 'LoginForm',
+})(
+    connect(null, { loginUser })(Login),
+);
