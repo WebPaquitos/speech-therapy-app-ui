@@ -2,45 +2,29 @@
 
 $text-color: #262828;
 
-button {
-    cursor: pointer;
-}
-
-.follow-up-btn {
-    padding: 0 !important;
-}
-
-.small-form {
-    margin-bottom: 10px !important;
-}
-
+button { cursor: pointer; }
+.follow-up-btn { padding: 0 !important; }
+.small-form { margin-bottom: 10px !important; }
+.push-down { margin-bottom: 40px; }
 .bottom {
     position: absolute;
     bottom: 20px;
     left: 0;
     right: 0;
 }
-
-.push-down {
-    margin-bottom: 40px;
-}
-
 .container {
     height: 100vh;
     color: $text-color;
 }
-
 .sidebar {
     position: absolute;
     left: 50px;
     top: 50px;
 }
-
 .content {
     padding-top: 75px;
     height: 100%;
 }
-
 .sidebar-ct {
     text-align: center;
     padding: 15px;

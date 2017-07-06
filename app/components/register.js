@@ -9,10 +9,12 @@ import { ROUTES } from '../common/constants';
 class Register extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             password: '',
             cpassword: '',
         };
+
         this.onRegisterClicked = this.onRegisterClicked.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
     }

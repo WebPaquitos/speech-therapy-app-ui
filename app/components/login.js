@@ -9,10 +9,12 @@ import { ROUTES } from '../common/constants';
 class Login extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             username: '',
             password: '',
         };
+
         this.onLoginClicked = this.onLoginClicked.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
     }
