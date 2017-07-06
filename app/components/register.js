@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Jumbotron, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
-import { FaLock } from 'react-icons/lib/fa';
+import { FaLock, FaUser } from 'react-icons/lib/fa';
 import { registerUser } from '../actions/index';
 import { ROUTES } from '../common/constants';
 
@@ -21,12 +21,12 @@ class Register extends Component {
     }
 
     renderField(field) {
-        const { input, placeholder, type, meta: { touched, error } } = field;
+        const { input, placeholder, icon, type, meta: { touched, error } } = field;
         return (
             <div className={`form-group ${touched && error ? 'has-danger' : ''}`}>
                 <InputGroup>
                     <InputGroupAddon>
-                        <FaLock/>
+                        {icon()}
                     </InputGroupAddon>
                     <Input
                         className="form-control"
@@ -55,9 +55,18 @@ class Register extends Component {
                         <Jumbotron className="small-form">
                             <form onSubmit={handleSubmit(this.onRegisterClicked)}>
                                 <Field
+                                    name="email"
+                                    placeholder="enter email"
+                                    type="email"
+                                    icon={FaUser}
+                                    component={this.renderField}
+                                />
+                                <br/>
+                                <Field
                                     name="password"
                                     placeholder="enter password"
                                     type="password"
+                                    icon={FaLock}
                                     component={this.renderField}
                                 />
                                 <br/>
@@ -65,6 +74,7 @@ class Register extends Component {
                                     name="cpassword"
                                     placeholder="confirm password"
                                     type="password"
+                                    icon={FaLock}
                                     component={this.renderField}
                                 />
                                 <br/>
@@ -90,14 +100,16 @@ class Register extends Component {
 function validate(values) {
     const errors = {};
 
+    if (!values.email) {
+        errors.email = 'Enter an email';
+    }
     if (!values.password) {
         errors.password = 'Enter a password';
     }
     if (!values.cpassword) {
         errors.cpassword = 'Confirm your password';
     }
-
-    if (Object.keys(errors).length === 0) {
+    if (values.password && values.cpassword) {
         if (values.password !== values.cpassword) {
             errors.password = 'Passwords don\'t match';
             errors.cpassword = 'Passwords don\'t match';
