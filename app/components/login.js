@@ -38,7 +38,9 @@ class Login extends Component {
                         xl={{ size: 4, push: 4 }}>
                         <Jumbotron>
                             <InputGroup>
-                                <InputGroupAddon><FaUser/></InputGroupAddon>
+                                <InputGroupAddon>
+                                    <FaUser/>
+                                </InputGroupAddon>
                                 <Input
                                     name="username"
                                     placeholder="username"
@@ -47,7 +49,9 @@ class Login extends Component {
                             </InputGroup>
                             <br/>
                             <InputGroup>
-                                <InputGroupAddon><FaLock/></InputGroupAddon>
+                                <InputGroupAddon>
+                                    <FaLock/>
+                                </InputGroupAddon>
                                 <Input
                                     name="password"
                                     placeholder="password"
