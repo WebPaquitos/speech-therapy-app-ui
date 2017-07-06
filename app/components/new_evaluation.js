@@ -9,7 +9,12 @@ const NewEvaluation = () => {
                 <Col xs="12">
                     <h1 className="push-down">New Evaluation</h1>
                     <Row>
-                        <Col xs="4">
+                        <Col
+                            xs="12"
+                            sm="12"
+                            md="6"
+                            lg="6"
+                            xl="4">
                             <Card>
                                 <CardImg
                                     top
@@ -25,7 +30,12 @@ const NewEvaluation = () => {
                                 </CardBlock>
                             </Card>
                         </Col>
-                        <Col xs="4">
+                        <Col
+                            xs="12"
+                            sm="12"
+                            md="6"
+                            lg="6"
+                            xl="4">
                             <Card>
                                 <CardImg
                                     top
