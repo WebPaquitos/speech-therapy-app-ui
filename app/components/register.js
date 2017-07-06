@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Button, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
-import { FaUser, FaLock } from 'react-icons/lib/fa';
-import { loginUser } from '../actions/index';
+import { FaLock } from 'react-icons/lib/fa';
+import { registerUser } from '../actions/index';
 import { ROUTES } from '../common/constants';
 
-class Login extends Component {
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
             password: '',
+            cpassword: '',
         };
-        this.onLoginClicked = this.onLoginClicked.bind(this);
+        this.onRegisterClicked = this.onRegisterClicked.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
     }
 
@@ -21,8 +21,8 @@ class Login extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    onLoginClicked() {
-        this.props.loginUser(this.state, () => {
+    onRegisterClicked() {
+        this.props.registerUser(this.state, () => {
             this.props.history.push(ROUTES.DASHBOARD);
         });
     }
@@ -40,17 +40,6 @@ class Login extends Component {
                         <Jumbotron className="small-form">
                             <InputGroup>
                                 <InputGroupAddon>
-                                    <FaUser/>
-                                </InputGroupAddon>
-                                <Input
-                                    name="username"
-                                    placeholder="username"
-                                    value={this.state.username}
-                                    onChange={this.onInputChange}/>
-                            </InputGroup>
-                            <br/>
-                            <InputGroup>
-                                <InputGroupAddon>
                                     <FaLock/>
                                 </InputGroupAddon>
                                 <Input
@@ -61,15 +50,27 @@ class Login extends Component {
                                     onChange={this.onInputChange}/>
                             </InputGroup>
                             <br/>
+                            <InputGroup>
+                                <InputGroupAddon>
+                                    <FaLock/>
+                                </InputGroupAddon>
+                                <Input
+                                    name="cpassword"
+                                    placeholder="confirm password"
+                                    type="password"
+                                    value={this.state.cpassword}
+                                    onChange={this.onInputChange}/>
+                            </InputGroup>
+                            <br/>
                             <p className="lead d-flex justify-content-end">
-                                <Button color="link" onClick={this.onLoginClicked}>Login</Button>
+                                <Button color="link" onClick={this.onRegisterClicked}>Register</Button>
                             </p>
                         </Jumbotron>
                         <div className="d-flex justify-content-end">
                             <Link
                                 className="btn btn-sm btn-link follow-up-btn"
-                                to={ROUTES.REGISTER}>
-                                No account yet? Register
+                                to={ROUTES.LOGIN}>
+                                Already have an account? Login
                             </Link>
                         </div>
                     </Col>
@@ -79,4 +80,4 @@ class Login extends Component {
     }
 }
 
-export default connect(null, { loginUser })(Login);
+export default connect(null, { registerUser })(Register);

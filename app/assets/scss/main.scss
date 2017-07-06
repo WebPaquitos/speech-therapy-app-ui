@@ -6,6 +6,14 @@ button {
     cursor: pointer;
 }
 
+.follow-up-btn {
+    padding: 0 !important;
+}
+
+.small-form {
+    margin-bottom: 10px !important;
+}
+
 .bottom {
     position: absolute;
     bottom: 20px;
@@ -31,9 +39,6 @@ button {
 .content {
     padding-top: 75px;
     height: 100%;
-    > .row {
-        height: 100%;
-    }
 }
 
 .sidebar-ct {

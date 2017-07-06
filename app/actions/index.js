@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_ENDPOINT, LOG_USER, LOGOUT_USER } from '../common/constants';
+import { API_ENDPOINT, LOG_USER, LOGOUT_USER, REGISTER_USER } from '../common/constants';
 
 export function loginUser(data, callback) {
     // const loggingUser = axios.post(`${API_ENDPOINT}/login`, data).then(() => callback());
@@ -33,6 +33,26 @@ export function logoutUser(data) {
             data: {
                 isLogged: false,
                 user: {},
+            },
+        },
+    };
+}
+
+export function registerUser(data, callback) {
+    // const registeringUser = axios.post(`${API_ENDPOINT}/register`, data);
+    // return {
+    //     type: REGISTER_USER,
+    //     payload: registeringUser,
+    // };
+    callback();
+    return {
+        type: REGISTER_USER,
+        payload: {
+            data: {
+                isLogged: true,
+                user: {
+                    name: 'Joana Faria',
+                },
             },
         },
     };

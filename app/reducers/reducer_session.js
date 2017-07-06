@@ -1,4 +1,4 @@
-import { LOG_USER, LOGOUT_USER } from '../common/constants';
+import { LOG_USER, LOGOUT_USER, REGISTER_USER } from '../common/constants';
 
 export default function (state = { isLogged: false, user: {} }, { type, payload }) {
     switch (type) {
@@ -7,6 +7,9 @@ export default function (state = { isLogged: false, user: {} }, { type, payload 
             break;
         case LOGOUT_USER:
             return payload.data;
+            break;
+        case REGISTER_USER:
+            return payload.data ? payload.data : state;
             break;
     }
     return state;

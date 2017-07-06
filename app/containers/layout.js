@@ -7,6 +7,7 @@ import { FaBars } from 'react-icons/lib/fa';
 import avatar from '../assets/img/avatar.png';
 import { ROUTES } from '../common/constants';
 import Login from '../components/login';
+import Register from '../components/register';
 import Logout from './logout';
 import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
@@ -119,7 +120,7 @@ class Layout extends Component {
                 <br/>
                 <div className={`push-down ${invisible}`}>
                     <Link
-                        className="btn btn-primary"
+                        className="btn btn-primary btn-outline-primary"
                         to={ROUTES.NEW_EVALUATION}
                         onClick={this.onSidebarActionClicked}>
                         New Evaluation
@@ -162,6 +163,7 @@ class Layout extends Component {
                                 )}/>
                             <Route path={ROUTES.LOGIN} component={Login}/>
                             <Route path={ROUTES.LOGOUT} component={Logout}/>
+                            <Route path={ROUTES.REGISTER} component={Register}/>
                             <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
                             <Route path={ROUTES.NEW_EVALUATION} component={NewEvaluation}/>
                         </Switch>
