@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Sidebar from 'react-sidebar';
 import { connect } from 'react-redux';
-import { Link, BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Link, BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { Button, ListGroup, ListGroupItem, Container } from 'reactstrap';
 import { FaBars } from 'react-icons/lib/fa';
 import avatar from '../assets/img/avatar.png';
@@ -142,7 +142,7 @@ class Layout extends Component {
         );
 
         return (
-            <BrowserRouter>
+            <Router>
                 <Sidebar
                     sidebar={sidebarContent}
                     open={this.state.sidebarOpen}
@@ -169,7 +169,7 @@ class Layout extends Component {
                         </Switch>
                     </Container>
                 </Sidebar>
-            </BrowserRouter>
+            </Router>
         );
     }
 }
