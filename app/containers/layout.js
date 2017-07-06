@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import Sidebar from 'react-sidebar';
 import { connect } from 'react-redux';
-import { Link, BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Link, BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Button, ListGroup, ListGroupItem, Container } from 'reactstrap';
 import { FaBars } from 'react-icons/lib/fa';
 import avatar from '../assets/img/avatar.png';
 import { ROUTES } from '../common/constants';
 import Login from '../components/login';
 import Logout from './logout';
-import Home from '../components/home';
 import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
 import { logoutUser } from '../actions/index';
@@ -133,7 +132,8 @@ class Layout extends Component {
                 <div className={`text-center bottom ${invisible}`}>
                     <Link
                         className="btn btn-link"
-                        to={ROUTES.LOGOUT}>
+                        to={ROUTES.LOGOUT}
+                        onClick={this.onSidebarActionClicked}>
                         Logout
                     </Link>
                 </div>
@@ -154,7 +154,12 @@ class Layout extends Component {
                     </div>
                     <Container>
                         <Switch>
-                            <Route exact path={ROUTES.BASE} component={Home}/>
+                            <Route
+                                exact
+                                path={ROUTES.BASE}
+                                render={() => (
+                                    isLogged ? (<Redirect to={ROUTES.DASHBOARD}/>) : (<Redirect to={ROUTES.LOGIN}/>)
+                            )}/>
                             <Route path={ROUTES.LOGIN} component={Login}/>
                             <Route path={ROUTES.LOGOUT} component={Logout}/>
                             <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
