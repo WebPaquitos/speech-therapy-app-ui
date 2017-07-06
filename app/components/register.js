@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Button, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
+import { Jumbotron, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
 import { FaLock } from 'react-icons/lib/fa';
 import { registerUser } from '../actions/index';
 import { ROUTES } from '../common/constants';
@@ -9,27 +10,39 @@ import { ROUTES } from '../common/constants';
 class Register extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            password: '',
-            cpassword: '',
-        };
-
         this.onRegisterClicked = this.onRegisterClicked.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
+        this.renderField = this.renderField.bind(this);
     }
 
-    onInputChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
-    onRegisterClicked() {
-        this.props.registerUser(this.state, () => {
+    onRegisterClicked(values) {
+        this.props.registerUser(values, () => {
             this.props.history.push(ROUTES.DASHBOARD);
         });
     }
 
+    renderField(field) {
+        const { input, placeholder, type, meta: { touched, error } } = field;
+        return (
+            <div className={`form-group ${touched && error ? 'has-danger' : ''}`}>
+                <InputGroup>
+                    <InputGroupAddon>
+                        <FaLock/>
+                    </InputGroupAddon>
+                    <Input
+                        className="form-control"
+                        placeholder={placeholder}
+                        type={type}
+                        {...input}/>
+                </InputGroup>
+                <div className="text-sm-left text-danger">
+                    {touched ? error : ''}
+                </div>
+            </div>
+        );
+    }
+
     render() {
+        const { handleSubmit } = this.props;
         return (
             <div className="content">
                 <Row>
@@ -40,33 +53,25 @@ class Register extends Component {
                         lg={{ size: 6, push: 3 }}
                         xl={{ size: 4, push: 4 }}>
                         <Jumbotron className="small-form">
-                            <InputGroup>
-                                <InputGroupAddon>
-                                    <FaLock/>
-                                </InputGroupAddon>
-                                <Input
+                            <form onSubmit={handleSubmit(this.onRegisterClicked)}>
+                                <Field
                                     name="password"
-                                    placeholder="password"
+                                    placeholder="enter password"
                                     type="password"
-                                    value={this.state.password}
-                                    onChange={this.onInputChange}/>
-                            </InputGroup>
-                            <br/>
-                            <InputGroup>
-                                <InputGroupAddon>
-                                    <FaLock/>
-                                </InputGroupAddon>
-                                <Input
+                                    component={this.renderField}
+                                />
+                                <br/>
+                                <Field
                                     name="cpassword"
                                     placeholder="confirm password"
                                     type="password"
-                                    value={this.state.cpassword}
-                                    onChange={this.onInputChange}/>
-                            </InputGroup>
-                            <br/>
-                            <p className="lead d-flex justify-content-end">
-                                <Button color="link" onClick={this.onRegisterClicked}>Register</Button>
-                            </p>
+                                    component={this.renderField}
+                                />
+                                <br/>
+                                <p className="lead d-flex justify-content-end">
+                                    <button type="submit" className="btn btn-link">Register</button>
+                                </p>
+                            </form>
                         </Jumbotron>
                         <div className="d-flex justify-content-end">
                             <Link
@@ -82,4 +87,29 @@ class Register extends Component {
     }
 }
 
-export default connect(null, { registerUser })(Register);
+function validate(values) {
+    const errors = {};
+
+    if (!values.password) {
+        errors.password = 'Enter a password';
+    }
+    if (!values.cpassword) {
+        errors.cpassword = 'Confirm your password';
+    }
+
+    if (Object.keys(errors).length === 0) {
+        if (values.password !== values.cpassword) {
+            errors.password = 'Passwords don\'t match';
+            errors.cpassword = 'Passwords don\'t match';
+        }
+    }
+
+    return errors;
+}
+
+export default reduxForm({
+    validate,
+    form: 'RegisterForm',
+})(
+    connect(null, { registerUser })(Register),
+);

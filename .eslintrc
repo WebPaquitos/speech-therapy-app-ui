@@ -30,6 +30,7 @@
             "error",
             4
         ],
+        "class-methods-use-this": "off",
         "no-unreachable": "off",
         "react/jsx-tag-spacing": 0,
         "react/jsx-closing-bracket-location": "off",
