@@ -89,7 +89,6 @@ class Login extends Component {
     }
 }
 
-
 function validate(values) {
     const errors = {};
 

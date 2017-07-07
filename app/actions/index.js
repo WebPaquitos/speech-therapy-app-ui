@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { API_ENDPOINT, LOG_USER, LOGOUT_USER, REGISTER_USER } from '../common/constants';
+import {
+    API_ENDPOINT, LOG_USER,
+    LOGOUT_USER, REGISTER_USER,
+    FETCH_HISTORY, MASA_SUBMIT,
+} from '../common/constants';
 
 export function loginUser(data, callback) {
     // const loggingUser = axios.post(`${API_ENDPOINT}/login`, data).then(() => callback());
@@ -54,6 +58,35 @@ export function registerUser({ name, email, password }, callback) {
                     name: 'Joana Faria',
                 },
             },
+        },
+    };
+}
+
+export function fetchHistory() {
+    // const fetchingHistory = axios.get(`${API_ENDPOINT}/history`);
+    // return {
+    //     type: HISTORY,
+    //     payload: fetchingHistory,
+    // };
+    return {
+        type: FETCH_HISTORY,
+        payload: {
+            data: [{ id: 1, name: 'Case 1' }],
+        },
+    };
+}
+
+export function submitMASA(data, callback) {
+    // const submittingMASA = axios.post(`${API_ENDPOINT}/masa`, data);
+    // return {
+    //     type: MASA_SUBMIT,
+    //     payload: submittingMASA,
+    // };
+    callback();
+    return {
+        type: MASA_SUBMIT,
+        payload: {
+            data: {},
         },
     };
 }
