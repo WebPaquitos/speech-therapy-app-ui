@@ -12,6 +12,12 @@ export function loginUser(data, callback) {
     //     payload: loggingUser,
     // };
     callback();
+    localStorage.setItem('session', JSON.stringify({
+        isLogged: true,
+        user: {
+            name: 'Joana Faria',
+        },
+    }));
     return {
         type: LOG_USER,
         payload: {
@@ -31,6 +37,10 @@ export function logoutUser(data) {
     //     type: LOGOUT_USER,
     //     payload: loggingOutUser,
     // };
+    localStorage.setItem('session', JSON.stringify({
+        isLogged: false,
+        user: {},
+    }));
     return {
         type: LOGOUT_USER,
         payload: {
@@ -49,6 +59,12 @@ export function registerUser({ name, email, password }, callback) {
     //     payload: registeringUser,
     // };
     callback();
+    localStorage.setItem('session', JSON.stringify({
+        isLogged: true,
+        user: {
+            name: 'Joana Faria',
+        },
+    }));
     return {
         type: REGISTER_USER,
         payload: {
