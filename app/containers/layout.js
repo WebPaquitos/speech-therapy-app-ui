@@ -5,6 +5,7 @@ import { Link, BrowserRouter as Router, Switch, Route, Redirect } from 'react-ro
 import { Button, ListGroup, ListGroupItem, Container } from 'reactstrap';
 import { FaBars } from 'react-icons/lib/fa';
 import avatar from '../assets/img/avatar.png';
+import Joana from '../assets/img/joana_avatar.jpg';
 import { ROUTES } from '../common/constants';
 import Login from '../components/login';
 import Register from '../components/register';
@@ -115,7 +116,7 @@ class Layout extends Component {
         const invisible = !isLogged ? 'invisible' : '';
         const sidebarContent = (
             <div>
-                <img src={avatar} alt="login" className="img-fluid mx-auto d-block"/>
+                <img src={user.name === 'Joana Faria' ? Joana : avatar} alt="avatar" className="img-fluid mx-auto d-block"/>
                 <br/>
                 <h2>{isLogged ? user.name : 'Please Login'}</h2>
                 <br/>

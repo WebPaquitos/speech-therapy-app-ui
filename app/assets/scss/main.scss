@@ -6,6 +6,7 @@ button { cursor: pointer; }
 .follow-up-btn { padding: 0 !important; }
 .small-form { margin-bottom: 10px !important; }
 .push-down { margin-bottom: 40px; }
+.form-full { width: 100%; }
 .bottom {
     position: absolute;
     bottom: 20px;
@@ -29,6 +30,8 @@ button { cursor: pointer; }
     text-align: center;
     padding: 15px;
     img {
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
     }
 }

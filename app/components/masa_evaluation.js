@@ -44,11 +44,11 @@ class MASAEvaluation extends Component {
         return (
             <div className="content">
                 <Row>
-                    <Col xs="12">
+                    <Col>
                         <h1 className="push-down">MASA Test</h1>
                         <Row>
-                            <form onSubmit={handleSubmit(this.onMASASubmitClicked)}>
-                                <Col xs="12">
+                            <form className="form-full" onSubmit={handleSubmit(this.onMASASubmitClicked)}>
+                                <Col>
                                     <Field
                                         name="email"
                                         placeholder="email"
