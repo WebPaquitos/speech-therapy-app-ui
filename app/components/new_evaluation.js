@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Col, Button, Card, CardImg, CardText, CardBlock,
     CardTitle } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../common/constants';
 
 const NewEvaluation = () => {
     return (
@@ -26,7 +28,7 @@ const NewEvaluation = () => {
                                     <CardText>
                                         MASA test to quickly evaluate the state of the patient relating to deglutation and other parameters.
                                     </CardText>
-                                    <Button color="primary" outline>Start test</Button>
+                                    <Link className="btn btn-primary btn-outline-primary" to={ROUTES.MASA_TEST}>Start test</Link>
                                 </CardBlock>
                             </Card>
                         </Col>

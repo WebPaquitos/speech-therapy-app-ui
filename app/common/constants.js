@@ -10,4 +10,5 @@ export const ROUTES = {
     HOME: '/home',
     DASHBOARD: '/dashboard',
     NEW_EVALUATION: '/start_evaluation',
+    MASA_TEST: '/masa_evaluation',
 };

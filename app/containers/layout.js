@@ -11,6 +11,7 @@ import Register from '../components/register';
 import Logout from './logout';
 import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
+import MASAEvaluation from '../components/masa_evaluation';
 import { logoutUser } from '../actions/index';
 
 const mql = window.matchMedia('(min-width: 992px)');
@@ -166,6 +167,7 @@ class Layout extends Component {
                             <Route path={ROUTES.REGISTER} component={Register}/>
                             <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
                             <Route path={ROUTES.NEW_EVALUATION} component={NewEvaluation}/>
+                            <Route path={ROUTES.MASA_TEST} component={MASAEvaluation}/>
                         </Switch>
                     </Container>
                 </Sidebar>
