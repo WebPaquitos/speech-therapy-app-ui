@@ -3,6 +3,8 @@ import { Row, Col, Button, Card, CardImg, CardText, CardBlock,
     CardTitle } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../common/constants';
+import MASA from '../assets/img/masa.png';
+import Other from '../assets/img/other.png';
 
 const NewEvaluation = () => {
     return (
@@ -21,7 +23,7 @@ const NewEvaluation = () => {
                                 <CardImg
                                     top
                                     width="100%"
-                                    src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"
+                                    src={MASA}
                                     alt="Card image cap" />
                                 <CardBlock>
                                     <CardTitle>MASA</CardTitle>
@@ -42,7 +44,7 @@ const NewEvaluation = () => {
                                 <CardImg
                                     top
                                     width="100%"
-                                    src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"
+                                    src={Other}
                                     alt="Card image cap" />
                                 <CardBlock>
                                     <CardTitle>Other tests</CardTitle>
