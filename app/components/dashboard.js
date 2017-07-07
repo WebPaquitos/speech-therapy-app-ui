@@ -6,7 +6,11 @@ const Dashboard = () => {
         <div className="content text-center">
             <Row>
                 <Col xs="12">
-                    <h1>Welcome to the Speech Therapy App! <br/>Please choose an action from the sidebar</h1>
+                    <h1>
+                        Welcome to the Speech Therapy App!
+                        <br/><br/>
+                        <small className="text-muted">Please choose an action from the sidebar</small>
+                    </h1>
                 </Col>
             </Row>
         </div>
