@@ -1,6 +1,11 @@
-import { LOG_USER, LOGOUT_USER, REGISTER_USER } from '../common/constants';
+import { LOG_USER, LOGOUT_USER, REGISTER_USER, STORAGE_KEYS, EMPTY_SESSION } from '../common/constants';
+import { getJSONFromStorage } from '../common/utils';
 
-export default function (state = JSON.parse(localStorage.getItem('session')) || { isLogged: false, user: {} }, { type, payload }) {
+function getSession() {
+    return getJSONFromStorage(STORAGE_KEYS.SESSION) || EMPTY_SESSION;
+}
+
+export default function (state = getSession(), { type, payload }) {
     switch (type) {
         case LOG_USER:
         case REGISTER_USER:

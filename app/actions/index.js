@@ -3,7 +3,9 @@ import {
     API_ENDPOINT, LOG_USER,
     LOGOUT_USER, REGISTER_USER,
     FETCH_HISTORY, MASA_SUBMIT,
+    STORAGE_KEYS, EMPTY_SESSION,
 } from '../common/constants';
+import { saveJSONInStorage } from '../common/utils';
 
 export function loginUser(data, callback) {
     // const loggingUser = axios.post(`${API_ENDPOINT}/login`, data).then(() => callback());
@@ -12,12 +14,12 @@ export function loginUser(data, callback) {
     //     payload: loggingUser,
     // };
     callback();
-    localStorage.setItem('session', JSON.stringify({
+    saveJSONInStorage(STORAGE_KEYS.SESSION, {
         isLogged: true,
         user: {
             name: 'Joana Faria',
         },
-    }));
+    });
     return {
         type: LOG_USER,
         payload: {
@@ -37,17 +39,11 @@ export function logoutUser(data) {
     //     type: LOGOUT_USER,
     //     payload: loggingOutUser,
     // };
-    localStorage.setItem('session', JSON.stringify({
-        isLogged: false,
-        user: {},
-    }));
+    saveJSONInStorage(STORAGE_KEYS.SESSION, EMPTY_SESSION);
     return {
         type: LOGOUT_USER,
         payload: {
-            data: {
-                isLogged: false,
-                user: {},
-            },
+            data: EMPTY_SESSION,
         },
     };
 }
@@ -59,12 +55,12 @@ export function registerUser({ name, email, password }, callback) {
     //     payload: registeringUser,
     // };
     callback();
-    localStorage.setItem('session', JSON.stringify({
+    saveJSONInStorage(STORAGE_KEYS.SESSION, {
         isLogged: true,
         user: {
             name: 'Joana Faria',
         },
-    }));
+    });
     return {
         type: REGISTER_USER,
         payload: {

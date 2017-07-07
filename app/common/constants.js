@@ -4,6 +4,13 @@ export const LOGOUT_USER = 'logout_user';
 export const REGISTER_USER = 'register_user';
 export const FETCH_HISTORY = 'fetch_history';
 export const MASA_SUBMIT = 'masa_submit';
+export const STORAGE_KEYS = {
+    SESSION: 'session',
+};
+export const EMPTY_SESSION = {
+    isLogged: false,
+    user: {},
+};
 export const ROUTES = {
     BASE: '/',
     LOGIN: '/login',
