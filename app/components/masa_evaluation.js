@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, InputGroup, InputGroupAddon, Input } from 'reactstrap';
+import { Row, Col, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { submitMASA } from '../actions/index';
@@ -19,24 +19,37 @@ class MASAEvaluation extends Component {
     }
 
     renderField(field) {
-        const { input, placeholder, icon, type, meta: { touched, error } } = field;
-        return (
-            <div className={`form-group ${touched && error ? 'has-danger' : ''}`}>
-                <InputGroup>
-                    <InputGroupAddon>
-                        {/*{icon()}*/}
-                    </InputGroupAddon>
+        const { input, placeholder, type, aDesc, meta: { touched, error } } = field;
+        let html = null;
+        if (type === 'radio') {
+            html = (
+                <FormGroup check className={`${touched && error ? 'has-danger' : ''} form-check-inline`}>
+                    <Label check>
+                        <Input
+                            type={type}
+                            {...input} />{' '}
+                        {`${input.value} : ${aDesc}`}
+                    </Label>
+                    <div className="text-sm-left text-danger">
+                        {touched ? error : ''}
+                    </div>
+                </FormGroup>
+            );
+        } else {
+            html = (
+                <div className={`form-group ${touched && error ? 'has-danger' : ''}`}>
                     <Input
                         className="form-control"
                         placeholder={placeholder}
                         type={type}
                         {...input}/>
-                </InputGroup>
-                <div className="text-sm-left text-danger">
-                    {touched ? error : ''}
+                    <div className="text-sm-left text-danger">
+                        {touched ? error : ''}
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        return html;
     }
 
     render() {
@@ -49,12 +62,37 @@ class MASAEvaluation extends Component {
                         <Row>
                             <form className="form-full" onSubmit={handleSubmit(this.onMASASubmitClicked)}>
                                 <Col>
-                                    <Field
-                                        name="email"
-                                        placeholder="email"
-                                        type="email"
-                                        component={this.renderField}
-                                    />
+                                    <FormGroup tag="fieldset">
+                                        <legend className="col-form-legend text-primary big-text">1. Alert Capacity</legend>
+                                        <Field
+                                            name="alertCapacity"
+                                            type="radio"
+                                            value="2"
+                                            aDesc="No response to speech"
+                                            component={this.renderField}
+                                        />
+                                        <Field
+                                            name="alertCapacity"
+                                            type="radio"
+                                            value="5"
+                                            aDesc="Difficulty waking"
+                                            component={this.renderField}
+                                        />
+                                        <Field
+                                            name="alertCapacity"
+                                            type="radio"
+                                            value="8"
+                                            aDesc="Sleepy"
+                                            component={this.renderField}
+                                        />
+                                        <Field
+                                            name="alertCapacity"
+                                            type="radio"
+                                            value="10"
+                                            aDesc="Alert"
+                                            component={this.renderField}
+                                        />
+                                    </FormGroup>
                                 </Col>
                             </form>
                         </Row>
@@ -68,7 +106,7 @@ class MASAEvaluation extends Component {
 function validate(values) {
     const errors = {};
 
-    console.log(values);
+    if (!values.alertCapacity) errors.alertCapacity = 'Value required';
 
     return errors;
 }

@@ -3,8 +3,8 @@ import { Row, Col, Button, Card, CardImg, CardText, CardBlock,
     CardTitle } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../common/constants';
-import MASA from '../assets/img/masa.png';
-import Other from '../assets/img/other.png';
+import MASAImg from '../assets/img/masa.png';
+import OtherImg from '../assets/img/other.png';
 
 const NewEvaluation = () => {
     return (
@@ -23,7 +23,7 @@ const NewEvaluation = () => {
                                 <CardImg
                                     top
                                     width="100%"
-                                    src={MASA}
+                                    src={MASAImg}
                                     alt="Card image cap" />
                                 <CardBlock>
                                     <CardTitle>MASA</CardTitle>
@@ -44,7 +44,7 @@ const NewEvaluation = () => {
                                 <CardImg
                                     top
                                     width="100%"
-                                    src={Other}
+                                    src={OtherImg}
                                     alt="Card image cap" />
                                 <CardBlock>
                                     <CardTitle>Other tests</CardTitle>

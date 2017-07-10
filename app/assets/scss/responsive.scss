@@ -3,4 +3,11 @@
     html {
         font-size: 36px !important;
     }
+    form {
+        .form-check-inline {
+            width: 100%;
+            margin-right: 30px;
+            + .form-check-inline { margin-left: 0; }
+        }
+    }
 }

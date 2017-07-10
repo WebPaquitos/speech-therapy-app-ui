@@ -1,12 +1,16 @@
 @import './responsive.scss';
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600");
 
 $text-color: #262828;
 
+body { font-family: "Open Sans", sans-serif !important; }
 button { cursor: pointer; }
 .follow-up-btn { padding: 0 !important; }
 .small-form { margin-bottom: 10px !important; }
 .push-down { margin-bottom: 40px; }
 .form-full { width: 100%; }
+.full-width { width: 100%; }
+.big-text { font-size: 1.6rem !important; }
 .bottom {
     position: absolute;
     bottom: 20px;
@@ -33,5 +37,15 @@ button { cursor: pointer; }
         width: 200px;
         height: 200px;
         border-radius: 50%;
+    }
+}
+form {
+    legend { font-size: 30px; }
+    .form-check-inline {
+        margin-right: 30px;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: rgba(0,0,0,.05);
+        label { width: 100%; }
     }
 }
