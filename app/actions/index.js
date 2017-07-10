@@ -49,29 +49,27 @@ export function logoutUser(data) {
 }
 
 export function registerUser({ name, email, password }, callback) {
-    // const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password });
-    // return {
-    //     type: REGISTER_USER,
-    //     payload: registeringUser,
-    // };
-    callback();
-    saveJSONInStorage(STORAGE_KEYS.SESSION, {
-        isLogged: true,
-        user: {
-            name: 'Joana Faria',
-        },
-    });
+    const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password });
     return {
         type: REGISTER_USER,
-        payload: {
-            data: {
-                isLogged: true,
-                user: {
-                    name: 'Joana Faria',
-                },
-            },
+        payload: registeringUser,
+        bundle: {
+            cb: callback,
+            storage: saveJSONInStorage,
         },
     };
+    // callback();
+    // return {
+    //     type: REGISTER_USER,
+    //     payload: {
+    //         data: {
+    //             isLogged: true,
+    //             user: {
+    //                 name: 'Joana Faria',
+    //             },
+    //         },
+    //     },
+    // };
 }
 
 export function fetchHistory() {

@@ -5,10 +5,12 @@ function getSession() {
     return getJSONFromStorage(STORAGE_KEYS.SESSION) || EMPTY_SESSION;
 }
 
-export default function (state = getSession(), { type, payload }) {
+export default function (state = getSession(), { type, payload, bundle }) {
     switch (type) {
         case LOG_USER:
         case REGISTER_USER:
+            bundle.cb();
+            bundle.storage(STORAGE_KEYS.SESSION, payload.data);
             return payload.data ? payload.data : state;
             break;
         case LOGOUT_USER:
