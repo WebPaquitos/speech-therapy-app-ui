@@ -7,69 +7,41 @@ import {
 } from '../common/constants';
 import { saveJSONInStorage } from '../common/utils';
 
-export function loginUser(data, callback) {
-    // const loggingUser = axios.post(`${API_ENDPOINT}/login`, data).then(() => callback());
-    // return {
-    //     type: LOG_USER,
-    //     payload: loggingUser,
-    // };
-    callback();
-    saveJSONInStorage(STORAGE_KEYS.SESSION, {
-        isLogged: true,
-        user: {
-            name: 'Joana Faria',
-        },
+export function loginUser(values, callback) {
+    const loggingUser = axios.post(`${API_ENDPOINT}/login`, values);
+    loggingUser.then(({ data }) => {
+        saveJSONInStorage(STORAGE_KEYS.SESSION, data);
+        callback();
+    }).catch((error) => {
+        console.log(error);
     });
     return {
         type: LOG_USER,
-        payload: {
-            data: {
-                isLogged: true,
-                user: {
-                    name: 'Joana Faria',
-                },
-            },
-        },
+        payload: loggingUser,
     };
 }
 
 export function logoutUser(data) {
-    // const loggingOutUser = axios.post(`${API_ENDPOINT}/logout`, data);
-    // return {
-    //     type: LOGOUT_USER,
-    //     payload: loggingOutUser,
-    // };
+    axios.post(`${API_ENDPOINT}/logout`, data);
     saveJSONInStorage(STORAGE_KEYS.SESSION, EMPTY_SESSION);
     return {
         type: LOGOUT_USER,
-        payload: {
-            data: EMPTY_SESSION,
-        },
+        payload: EMPTY_SESSION,
     };
 }
 
 export function registerUser({ name, email, password }, callback) {
     const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password });
+    registeringUser.then(({ data }) => {
+        saveJSONInStorage(STORAGE_KEYS.SESSION, data);
+        callback();
+    }).catch((error) => {
+        console.log(error);
+    });
     return {
         type: REGISTER_USER,
         payload: registeringUser,
-        bundle: {
-            cb: callback,
-            storage: saveJSONInStorage,
-        },
     };
-    // callback();
-    // return {
-    //     type: REGISTER_USER,
-    //     payload: {
-    //         data: {
-    //             isLogged: true,
-    //             user: {
-    //                 name: 'Joana Faria',
-    //             },
-    //         },
-    //     },
-    // };
 }
 
 export function fetchHistory() {

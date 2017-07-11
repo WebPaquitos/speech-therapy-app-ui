@@ -1,17 +1,19 @@
-import { LOG_USER, LOGOUT_USER, REGISTER_USER, STORAGE_KEYS, EMPTY_SESSION } from '../common/constants';
+import {
+    LOG_USER, LOGOUT_USER,
+    REGISTER_USER_FULFILLED,
+    STORAGE_KEYS, EMPTY_SESSION,
+} from '../common/constants';
 import { getJSONFromStorage } from '../common/utils';
 
 function getSession() {
     return getJSONFromStorage(STORAGE_KEYS.SESSION) || EMPTY_SESSION;
 }
 
-export default function (state = getSession(), { type, payload, bundle }) {
+export default function (state = getSession(), { type, payload }) {
     switch (type) {
         case LOG_USER:
-        case REGISTER_USER:
-            bundle.cb();
-            bundle.storage(STORAGE_KEYS.SESSION, payload.data);
-            return payload.data ? payload.data : state;
+        case REGISTER_USER_FULFILLED:
+            return payload.data || state;
             break;
         case LOGOUT_USER:
             return payload.data;
