@@ -22,7 +22,7 @@ export function loginUser(values, callback) {
 }
 
 export function logoutUser(data) {
-    axios.post(`${API_ENDPOINT}/logout`, data);
+    axios.get(`${API_ENDPOINT}/logout`, data);
     saveJSONInStorage(STORAGE_KEYS.SESSION, EMPTY_SESSION);
     return {
         type: LOGOUT_USER,
