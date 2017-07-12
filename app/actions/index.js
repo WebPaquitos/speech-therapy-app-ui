@@ -69,19 +69,18 @@ export function fetchMASAModel() {
     };
 }
 
-export function submitMASA({ name, age, description, alertCapacity, cooperation }, callback) {
-    const masaData = {
-        patient: {
-            age,
-            name,
-            description,
-        },
-        fields: {
-            alertCapacity,
-            cooperation,
-        },
+export function submitMASA({ masaModel, values }, callback) {
+    const masaClone = { ...masaModel };
+    masaClone.patient = {
+        name: values.name,
+        birthdate: new Date(),
+        description: values.description,
     };
-    const submittingMASA = axios.post(`${API_ENDPOINT}/masa`, masaData);
+    Object.keys(values).forEach((key) => {
+        const field = masaClone.fields.find(({ name }) => name === key);
+        if (field) field.chosen = values[key];
+    });
+    const submittingMASA = axios.post(`${API_ENDPOINT}/masa`, masaClone);
     submittingMASA.then(() => {
         callback();
     }).catch((error) => {

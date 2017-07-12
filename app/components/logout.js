@@ -5,7 +5,7 @@ import { ROUTES } from '../common/constants';
 
 class Logout extends Component {
     componentDidMount() {
-        this.props.logoutUser(this.props.session);
+        this.props.logoutUser();
         this.props.history.push(ROUTES.LOGIN);
     }
 
@@ -14,10 +14,4 @@ class Logout extends Component {
     }
 }
 
-function mapStateToProps({ session }) {
-    return {
-        session,
-    };
-}
-
-export default connect(mapStateToProps, { logoutUser })(Logout);
+export default connect(null, { logoutUser })(Logout);

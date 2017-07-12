@@ -9,7 +9,7 @@ import JoanaImg from '../assets/img/joana_avatar.jpg';
 import { ROUTES } from '../common/constants';
 import Login from '../components/login';
 import Register from '../components/register';
-import Logout from './logout';
+import Logout from '../components/logout';
 import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
 import MASAEvaluation from './masa_evaluation';

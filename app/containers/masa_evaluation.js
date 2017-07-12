@@ -11,6 +11,7 @@ class MASAEvaluation extends Component {
         super(props);
         this.onMASASubmitClicked = this.onMASASubmitClicked.bind(this);
         this.renderField = this.renderField.bind(this);
+        this.renderFields = this.renderFields.bind(this);
     }
 
     componentWillMount() {
@@ -18,8 +19,10 @@ class MASAEvaluation extends Component {
     }
 
     onMASASubmitClicked(values) {
-        console.log(values);
-        this.props.submitMASA(values, () => {
+        this.props.submitMASA({
+            values,
+            masaModel: this.props.masa,
+        }, () => {
             this.props.history.push(ROUTES.NEW_EVALUATION);
         });
     }
@@ -70,6 +73,29 @@ class MASAEvaluation extends Component {
         return html;
     }
 
+    renderFields() {
+        if (this.props.masa === {} || this.props.masa.fields === undefined) return null;
+        return this.props.masa.fields.map((field, index) => {
+            return (
+                <FormGroup tag="fieldset" key={field.name}>
+                    <legend className="col-form-legend text-primary big-text">{Number(index) + 1}. {field.label}</legend>
+                    {field.options.map((option) => {
+                        return (
+                            <Field
+                                key={option.name}
+                                name={field.name}
+                                type="radio"
+                                value={option.value}
+                                aDesc={option.name}
+                                component={this.renderField}
+                            />
+                        );
+                    })}
+                </FormGroup>
+            );
+        });
+    }
+
     render() {
         const { handleSubmit } = this.props;
         return (
@@ -101,68 +127,7 @@ class MASAEvaluation extends Component {
                                             component={this.renderField}
                                         />
                                     </FormGroup>
-                                    <FormGroup tag="fieldset">
-                                        <legend className="col-form-legend text-primary big-text">1. Alert Capacity</legend>
-                                        <Field
-                                            name="alertCapacity"
-                                            type="radio"
-                                            value="2"
-                                            aDesc="No response to speech"
-                                            component={this.renderField}
-                                        />
-                                        <Field
-                                            name="alertCapacity"
-                                            type="radio"
-                                            value="5"
-                                            aDesc="Difficulty waking"
-                                            component={this.renderField}
-                                        />
-                                        <Field
-                                            name="alertCapacity"
-                                            type="radio"
-                                            value="8"
-                                            aDesc="Sleepy"
-                                            component={this.renderField}
-                                        />
-                                        <Field
-                                            name="alertCapacity"
-                                            type="radio"
-                                            value="10"
-                                            aDesc="Alert"
-                                            component={this.renderField}
-                                        />
-                                    </FormGroup>
-                                    <FormGroup tag="fieldset">
-                                        <legend className="col-form-legend text-primary big-text">2. Cooperation</legend>
-                                        <Field
-                                            name="cooperation"
-                                            type="radio"
-                                            value="2"
-                                            aDesc="Doesn't cooperate"
-                                            component={this.renderField}
-                                        />
-                                        <Field
-                                            name="cooperation"
-                                            type="radio"
-                                            value="5"
-                                            aDesc="Reluctant"
-                                            component={this.renderField}
-                                        />
-                                        <Field
-                                            name="cooperation"
-                                            type="radio"
-                                            value="8"
-                                            aDesc="Floating cooperation"
-                                            component={this.renderField}
-                                        />
-                                        <Field
-                                            name="cooperation"
-                                            type="radio"
-                                            value="10"
-                                            aDesc="Cooperate"
-                                            component={this.renderField}
-                                        />
-                                    </FormGroup>
+                                    {this.renderFields()}
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                 </Col>
                             </form>
@@ -176,11 +141,17 @@ class MASAEvaluation extends Component {
 
 function validate(values) {
     const errors = {};
+    const requiredFields = [
+        'name',
+        'birthdate',
+        'CapacidadeDeAlerta',
+        'Cooperacao',
+        'Compreensao',
+    ];
 
-    if (!values.name) errors.name = 'Required field';
-    if (!values.birthdate) errors.birthdate = 'Required field';
-    if (!values.alertCapacity) errors.alertCapacity = 'Required field';
-    if (!values.cooperation) errors.cooperation = 'Required field';
+    requiredFields.forEach((field) => {
+        if (!values[field]) errors[field] = 'Required field';
+    });
 
     return errors;
 }
