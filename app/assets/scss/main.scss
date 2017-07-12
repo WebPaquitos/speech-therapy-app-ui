@@ -49,3 +49,8 @@ form {
         label { width: 100%; }
     }
 }
+.spaced-grid {
+    [class*='col-'] {
+        margin-bottom: 50px;
+    }
+}

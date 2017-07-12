@@ -12,11 +12,11 @@ const NewEvaluation = () => {
             <Row>
                 <Col xs="12">
                     <h1 className="push-down">New Evaluation</h1>
-                    <Row>
+                    <Row className="spaced-grid">
                         <Col
                             xs="12"
                             sm="12"
-                            md="6"
+                            md="12"
                             lg="6"
                             xl="4">
                             <Card>
@@ -37,7 +37,7 @@ const NewEvaluation = () => {
                         <Col
                             xs="12"
                             sm="12"
-                            md="6"
+                            md="12"
                             lg="6"
                             xl="4">
                             <Card>

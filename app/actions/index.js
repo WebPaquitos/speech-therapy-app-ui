@@ -8,7 +8,11 @@ import {
 import { saveJSONInStorage } from '../common/utils';
 
 export function loginUser(values, callback) {
-    const loggingUser = axios.post(`${API_ENDPOINT}/login`, values);
+    const loggingUser = axios.post(`${API_ENDPOINT}/login`, values, {
+        headers: {
+            withCredentials: true,
+        },
+    });
     loggingUser.then(({ data }) => {
         saveJSONInStorage(STORAGE_KEYS.SESSION, data);
         callback();
@@ -21,8 +25,12 @@ export function loginUser(values, callback) {
     };
 }
 
-export function logoutUser(data) {
-    axios.get(`${API_ENDPOINT}/logout`, data);
+export function logoutUser() {
+    axios.get(`${API_ENDPOINT}/logout`, {
+        headers: {
+            withCredentials: true,
+        },
+    });
     saveJSONInStorage(STORAGE_KEYS.SESSION, EMPTY_SESSION);
     return {
         type: LOGOUT_USER,
@@ -31,7 +39,11 @@ export function logoutUser(data) {
 }
 
 export function registerUser({ name, email, password }, callback) {
-    const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password });
+    const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password }, {
+        headers: {
+            withCredentials: true,
+        },
+    });
     registeringUser.then(({ data }) => {
         saveJSONInStorage(STORAGE_KEYS.SESSION, data);
         callback();

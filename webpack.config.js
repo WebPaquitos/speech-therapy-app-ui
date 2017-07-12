@@ -1,6 +1,7 @@
 const { resolve } = require('path');
 
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
@@ -89,6 +90,12 @@ const config = {
         }),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new ExtractTextPlugin({ filename: 'style.css', disable: false, allChunks: true }),
+        new CopyWebpackPlugin([
+            { from: './sw.js', to: 'sw.js' },
+        ], {
+            ignore: [],
+            copyUnmodified: false,
+        }),
         new webpack.HotModuleReplacementPlugin(),
     ],
 };
