@@ -7,12 +7,10 @@ import {
 } from '../common/constants';
 import { saveJSONInStorage } from '../common/utils';
 
+axios.defaults.withCredentials = true;
+
 export function loginUser(values, callback) {
-    const loggingUser = axios.post(`${API_ENDPOINT}/login`, values, {
-        headers: {
-            withCredentials: true,
-        },
-    });
+    const loggingUser = axios.post(`${API_ENDPOINT}/login`, values);
     loggingUser.then(({ data }) => {
         saveJSONInStorage(STORAGE_KEYS.SESSION, data);
         callback();
@@ -26,11 +24,7 @@ export function loginUser(values, callback) {
 }
 
 export function logoutUser() {
-    axios.get(`${API_ENDPOINT}/logout`, {
-        headers: {
-            withCredentials: true,
-        },
-    });
+    axios.get(`${API_ENDPOINT}/logout`);
     saveJSONInStorage(STORAGE_KEYS.SESSION, EMPTY_SESSION);
     return {
         type: LOGOUT_USER,
@@ -39,11 +33,7 @@ export function logoutUser() {
 }
 
 export function registerUser({ name, email, password }, callback) {
-    const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password }, {
-        headers: {
-            withCredentials: true,
-        },
-    });
+    const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password });
     registeringUser.then(({ data }) => {
         saveJSONInStorage(STORAGE_KEYS.SESSION, data);
         callback();
