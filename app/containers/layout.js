@@ -12,7 +12,7 @@ import Register from '../components/register';
 import Logout from './logout';
 import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
-import MASAEvaluation from '../components/masa_evaluation';
+import MASAEvaluation from './masa_evaluation';
 import History from './history';
 import { logoutUser } from '../actions/index';
 
