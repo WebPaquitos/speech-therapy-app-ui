@@ -4,6 +4,7 @@ import {
     LOGOUT_USER, REGISTER_USER,
     FETCH_HISTORY, MASA_SUBMIT,
     STORAGE_KEYS, EMPTY_SESSION,
+    FETCH_MASA,
 } from '../common/constants';
 import { saveJSONInStorage } from '../common/utils';
 
@@ -60,17 +61,34 @@ export function fetchHistory() {
     };
 }
 
-export function submitMASA(data, callback) {
-    // const submittingMASA = axios.post(`${API_ENDPOINT}/masa`, data);
-    // return {
-    //     type: MASA_SUBMIT,
-    //     payload: submittingMASA,
-    // };
-    callback();
+export function fetchMASAModel() {
+    const fetchingMASA = axios.get(`${API_ENDPOINT}/masa`);
+    return {
+        type: FETCH_MASA,
+        payload: fetchingMASA,
+    };
+}
+
+export function submitMASA({ name, age, description, alertCapacity, cooperation }, callback) {
+    const masaData = {
+        patient: {
+            age,
+            name,
+            description,
+        },
+        fields: {
+            alertCapacity,
+            cooperation,
+        },
+    };
+    const submittingMASA = axios.post(`${API_ENDPOINT}/masa`, masaData);
+    submittingMASA.then(() => {
+        callback();
+    }).catch((error) => {
+        console.log(error);
+    });
     return {
         type: MASA_SUBMIT,
-        payload: {
-            data: {},
-        },
+        payload: submittingMASA,
     };
 }

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { submitMASA } from '../actions/index';
+import moment from 'moment';
+import { submitMASA, fetchMASAModel } from '../actions/index';
 import { ROUTES } from '../common/constants';
+import Datepicker from './datepicker';
 
 class MASAEvaluation extends Component {
     constructor(props) {
@@ -12,7 +14,12 @@ class MASAEvaluation extends Component {
         this.renderField = this.renderField.bind(this);
     }
 
+    componentWillMount() {
+        this.props.fetchMASAModel();
+    }
+
     onMASASubmitClicked(values) {
+        console.log(values);
         this.props.submitMASA(values, () => {
             this.props.history.push(ROUTES.NEW_EVALUATION);
         });
@@ -28,12 +35,24 @@ class MASAEvaluation extends Component {
                         <Input
                             type={type}
                             {...input} />{' '}
-                        {`${input.value} : ${aDesc}`}
+                        <strong>{input.value}</strong> : {aDesc}
                     </Label>
                     <div className="text-sm-left text-danger">
                         {touched ? error : ''}
                     </div>
                 </FormGroup>
+            );
+        } else if (type === 'date') {
+            html = (
+                <div className={`form-group ${touched && error ? 'has-danger' : ''}`}>
+                    <Datepicker
+                        dateFormat="DD/MM/YYYY"
+                        placeholderText={placeholder}
+                        {...input}/>
+                    <div className="text-sm-left text-danger">
+                        {touched ? error : ''}
+                    </div>
+                </div>
             );
         } else {
             html = (
@@ -62,6 +81,27 @@ class MASAEvaluation extends Component {
                         <Row>
                             <form className="form-full" onSubmit={handleSubmit(this.onMASASubmitClicked)}>
                                 <Col>
+                                    <FormGroup tag="fieldset">
+                                        <legend className="col-form-legend text-primary big-text">Patient Data</legend>
+                                        <Field
+                                            name="name"
+                                            type="text"
+                                            placeholder="Name"
+                                            component={this.renderField}
+                                        />
+                                        <Field
+                                            name="birthdate"
+                                            type="date"
+                                            placeholder="Birthdate"
+                                            component={this.renderField}
+                                        />
+                                        <Field
+                                            name="description"
+                                            type="text"
+                                            placeholder="Additional data"
+                                            component={this.renderField}
+                                        />
+                                    </FormGroup>
                                     <FormGroup tag="fieldset">
                                         <legend className="col-form-legend text-primary big-text">1. Alert Capacity</legend>
                                         <Field
@@ -93,6 +133,38 @@ class MASAEvaluation extends Component {
                                             component={this.renderField}
                                         />
                                     </FormGroup>
+                                    <FormGroup tag="fieldset">
+                                        <legend className="col-form-legend text-primary big-text">2. Cooperation</legend>
+                                        <Field
+                                            name="cooperation"
+                                            type="radio"
+                                            value="2"
+                                            aDesc="Doesn't cooperate"
+                                            component={this.renderField}
+                                        />
+                                        <Field
+                                            name="cooperation"
+                                            type="radio"
+                                            value="5"
+                                            aDesc="Reluctant"
+                                            component={this.renderField}
+                                        />
+                                        <Field
+                                            name="cooperation"
+                                            type="radio"
+                                            value="8"
+                                            aDesc="Floating cooperation"
+                                            component={this.renderField}
+                                        />
+                                        <Field
+                                            name="cooperation"
+                                            type="radio"
+                                            value="10"
+                                            aDesc="Cooperate"
+                                            component={this.renderField}
+                                        />
+                                    </FormGroup>
+                                    <button type="submit" className="btn btn-primary">Submit</button>
                                 </Col>
                             </form>
                         </Row>
@@ -106,14 +178,23 @@ class MASAEvaluation extends Component {
 function validate(values) {
     const errors = {};
 
-    if (!values.alertCapacity) errors.alertCapacity = 'Value required';
+    if (!values.name) errors.name = 'Required field';
+    if (!values.birthdate) errors.birthdate = 'Required field';
+    if (!values.alertCapacity) errors.alertCapacity = 'Required field';
+    if (!values.cooperation) errors.cooperation = 'Required field';
 
     return errors;
+}
+
+function mapStateToProps({ masa }) {
+    return {
+        masa,
+    };
 }
 
 export default reduxForm({
     validate,
     form: 'MasaForm',
 })(
-    connect(null, { submitMASA })(MASAEvaluation),
+    connect(mapStateToProps, { submitMASA, fetchMASAModel })(MASAEvaluation),
 );
