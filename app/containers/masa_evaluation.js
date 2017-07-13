@@ -143,7 +143,6 @@ function validate(values) {
     const errors = {};
     const requiredFields = [
         'name',
-        'birthdate',
         'CapacidadeDeAlerta',
         'Cooperacao',
         'Compreensao',
