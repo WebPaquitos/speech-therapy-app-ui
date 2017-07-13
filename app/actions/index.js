@@ -1,5 +1,4 @@
 import axios from 'axios';
-import moment from 'moment';
 import {
     API_ENDPOINT, LOG_USER,
     LOGOUT_USER, REGISTER_USER,
@@ -74,7 +73,7 @@ export function submitMASA({ masaModel, values }, callback) {
     const masaClone = { ...masaModel };
     masaClone.patient = {
         name: values.name,
-        birthdate: moment(values.birthdate, 'DD-MM-YYYY').toDate(),
+        birthdate: values.birthdate.toDate(),
         description: values.description || null,
     };
     Object.keys(values).forEach((key) => {
