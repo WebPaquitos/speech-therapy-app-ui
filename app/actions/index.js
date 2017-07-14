@@ -48,16 +48,10 @@ export function registerUser({ name, email, password }, callback) {
 }
 
 export function fetchHistory() {
-    // const fetchingHistory = axios.get(`${API_ENDPOINT}/history`);
-    // return {
-    //     type: HISTORY,
-    //     payload: fetchingHistory,
-    // };
+    const fetchingHistory = axios.get(`${API_ENDPOINT}/masas`);
     return {
         type: FETCH_HISTORY,
-        payload: {
-            data: [{ id: 1, name: 'Case 1' }],
-        },
+        payload: fetchingHistory,
     };
 }
 

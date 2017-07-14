@@ -13,14 +13,16 @@ class History extends Component {
     renderHistory() {
         const { history } = this.props;
         return history.map((historyCase) => {
+            const id = historyCase._id;
             return (
-                <tr key={historyCase.id}>
-                    <th scope="row">{historyCase.id}</th>
+                <tr key={id}>
+                    <th scope="row">{id}</th>
                     <td>
-                        <Link to={`${ROUTES.HISTORY}/${historyCase.id}`}>
-                            {historyCase.name}
+                        <Link to={`${ROUTES.HISTORY}/${id}`}>
+                            {historyCase.patient.name}
                         </Link>
                     </td>
+                    <td>{historyCase.patient.description}</td>
                 </tr>
             );
         });
@@ -38,7 +40,8 @@ class History extends Component {
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Name</th>
+                                            <th>Patient name</th>
+                                            <th>Patient data</th>
                                         </tr>
                                     </thead>
                                     <tbody>
