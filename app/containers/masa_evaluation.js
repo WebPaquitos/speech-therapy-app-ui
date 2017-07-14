@@ -36,7 +36,6 @@ class MASAEvaluation extends Component {
         this.validateRules = this.validateRules.bind(this);
         this.showErrors = this.showErrors.bind(this);
         this.validate = this.validate.bind(this);
-        this.tempValidate = this.tempValidate.bind(this);
         this.renderOptions = this.renderOptions.bind(this);
     }
 
@@ -99,9 +98,9 @@ class MASAEvaluation extends Component {
     validateRules(temp = false) {
         const values = this.state;
         const errors = {};
-        if (temp) {
-            if (values.name.touched && !values.name.value) errors.name = 'Field required';
-        } else if (!values.name.value) errors.name = 'Field required';
+        if (temp && values.name.touched && !values.name.value) errors.name = 'Field required';
+        else if (!values.name.value) errors.name = 'Field required';
+        // TODO: validate the dynamic fields as required
         return errors;
     }
 
@@ -133,7 +132,7 @@ class MASAEvaluation extends Component {
                             <FormGroup
                                 check
                                 className={`form-check-inline
-                                ${this.state[field.name] && this.state[field.name].touched && this.state[field.name].error ? 'has-danger' : ''}`}
+                                ${this.state[field.name] && this.state[field.name].error ? 'has-danger' : ''}`}
                                 key={`${field.name}${option.value}`}>
                                 <Label check>
                                     <input
@@ -165,7 +164,7 @@ class MASAEvaluation extends Component {
                                 <Col>
                                     <FormGroup tag="fieldset">
                                         <legend className="col-form-legend text-primary big-text">Patient Data</legend>
-                                        <div className={`form-group ${this.state.name.touched && this.state.name.error ? 'has-danger' : ''}`}>
+                                        <div className={`form-group ${this.state.name.error ? 'has-danger' : ''}`}>
                                             <Input
                                                 name="name"
                                                 className="form-control"
