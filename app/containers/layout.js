@@ -173,25 +173,21 @@ class Layout extends Component {
                             <Route path={ROUTES.LOGIN} component={Login}/>
                             <Route path={ROUTES.LOGOUT} component={Logout}/>
                             <Route path={ROUTES.REGISTER} component={Register}/>
-                            <Route
-                                path={ROUTES.DASHBOARD}
-                                render={() => (
-                                    isLogged ? Dashboard : (<Redirect to={ROUTES.LOGIN}/>)
-                                )}/>
+                            <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
                             <Route
                                 path={ROUTES.NEW_EVALUATION}
                                 render={() => (
-                                    isLogged ? NewEvaluation : (<Redirect to={ROUTES.LOGIN}/>)
+                                    isLogged ? <Route component={NewEvaluation}/> : (<Redirect to={ROUTES.LOGIN}/>)
                                 )}/>
                             <Route
                                 path={ROUTES.MASA_TEST}
                                 render={() => (
-                                    isLogged ? MASAEvaluation : (<Redirect to={ROUTES.LOGIN}/>)
+                                    isLogged ? <Route component={MASAEvaluation}/> : (<Redirect to={ROUTES.LOGIN}/>)
                                 )}/>
                             <Route
                                 path={ROUTES.HISTORY}
                                 render={() => (
-                                    isLogged ? History : (<Redirect to={ROUTES.LOGIN}/>)
+                                    isLogged ? <Route component={History}/> : (<Redirect to={ROUTES.LOGIN}/>)
                                 )}/>
                         </Switch>
                     </Container>

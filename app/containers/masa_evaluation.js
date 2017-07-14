@@ -43,13 +43,29 @@ class MASAEvaluation extends Component {
         this.props.fetchMASAModel();
     }
 
+    componentDidMount() {
+        setTimeout(() => {
+            if (this.props.masa.fields) {
+                this.props.masa.fields.forEach(({ name }) => {
+                    this.setState({
+                        [name]: {
+                            value: null,
+                            focused: false,
+                            touched: false,
+                            error: null,
+                        },
+                    });
+                });
+            }
+        }, 500);
+    }
+
     onMASASubmitClicked(e) {
         e.preventDefault();
-        console.log(this.state);
         const validationResult = this.validate();
         if (validationResult === true) {
             this.props.submitMASA({
-                values: {},
+                values: this.state,
                 masaModel: this.props.masa,
             }, () => {
                 this.props.history.push(ROUTES.NEW_EVALUATION);
@@ -86,21 +102,28 @@ class MASAEvaluation extends Component {
     }
 
     onInputBlur(e) {
+        e.persist();
         this.setState({
             [e.target.name]: {
                 ...this.state[e.target.name],
                 touched: true,
                 focused: false,
             },
-        }, () => this.validate(true));
+        }, () => this.validate(true, e));
     }
 
-    validateRules(temp = false) {
+    validateRules(temp = false, e) {
         const values = this.state;
+        const ignoreFields = ['name', 'birthdate', 'description'];
         const errors = {};
-        if (temp && values.name.touched && !values.name.value) errors.name = 'Field required';
-        else if (!values.name.value) errors.name = 'Field required';
-        // TODO: validate the dynamic fields as required
+        if (temp) {
+            if (e.target.name === 'name' && values.name.touched && !values.name.value) errors.name = 'Field required';
+        } else if (!values.name.value) errors.name = 'Field required';
+        Object.keys(values).filter(k => !ignoreFields.includes(k)).forEach((key) => {
+            if (temp) {
+                if (e.target.name === key && values[key].touched && !values[key].value) errors[key] = 'Field required';
+            } else if (!values[key].value) errors[key] = 'Field required';
+        });
         return errors;
     }
 
@@ -115,8 +138,8 @@ class MASAEvaluation extends Component {
         });
     }
 
-    validate(temp = false) {
-        const errors = this.validateRules(temp);
+    validate(temp = false, e = null) {
+        const errors = this.validateRules(temp, e);
         if (Object.keys(errors).length === 0) return true;
         return (temp ? this.showErrors(errors) : errors);
     }
@@ -139,11 +162,13 @@ class MASAEvaluation extends Component {
                                         type="radio"
                                         name={field.name}
                                         value={option.value}
-                                        onChange={this.onInputChange}/>{' '}
+                                        onChange={this.onInputChange}
+                                        onFocus={this.onInputFocus}
+                                        onBlur={this.onInputBlur}/>{' '}
                                     <strong>{option.value}</strong> : {option.name}
                                 </Label>
                                 <div className="text-sm-left text-danger">
-                                    {' '}
+                                    {this.state[field.name] && this.state[field.name].error ? this.state[field.name].error : ''}
                                 </div>
                             </FormGroup>
                         );

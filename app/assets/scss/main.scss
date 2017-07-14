@@ -17,6 +17,11 @@ button { cursor: pointer; }
     left: 0;
     right: 0;
 }
+.bottom-left {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
 .container {
     height: 100vh;
     color: $text-color;
@@ -53,6 +58,10 @@ form {
 .spaced-grid {
     [class*='col-'] {
         margin-bottom: 50px;
+        .card {
+            min-height: 450px;
+            .card-text { margin-bottom: 100px; }
+        }
     }
 }
 .date-picker {

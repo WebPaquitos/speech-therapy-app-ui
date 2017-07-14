@@ -30,7 +30,7 @@ const NewEvaluation = () => {
                                     <CardText>
                                         MASA test to quickly evaluate the state of the patient relating to deglutation and other parameters.
                                     </CardText>
-                                    <Link className="btn btn-primary btn-outline-primary" to={ROUTES.MASA_TEST}>Start test</Link>
+                                    <Link className="btn btn-primary btn-outline-primary bottom-left" to={ROUTES.MASA_TEST}>Start test</Link>
                                 </CardBlock>
                             </Card>
                         </Col>
@@ -51,7 +51,7 @@ const NewEvaluation = () => {
                                     <CardText>
                                         Other tests with custom parameters are coming soon to this platform. Stay tuned.
                                     </CardText>
-                                    <Button color="primary" outline disabled>Start test</Button>
+                                    <Button className="bottom-left" color="primary" outline disabled>Start test</Button>
                                 </CardBlock>
                             </Card>
                         </Col>
