@@ -4,7 +4,7 @@ import {
     LOGOUT_USER, REGISTER_USER,
     FETCH_HISTORY, MASA_SUBMIT,
     STORAGE_KEYS, EMPTY_SESSION,
-    FETCH_MASA,
+    FETCH_MASA, FETCH_PATIENTS,
 } from '../common/constants';
 import { saveJSONInStorage } from '../common/utils';
 
@@ -52,6 +52,14 @@ export function fetchHistory() {
     return {
         type: FETCH_HISTORY,
         payload: fetchingHistory,
+    };
+}
+
+export function fetchPatients() {
+    const fetchingPatients = axios.get(`${API_ENDPOINT}/patients`);
+    return {
+        type: FETCH_PATIENTS,
+        payload: fetchingPatients,
     };
 }
 

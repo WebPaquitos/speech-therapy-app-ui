@@ -14,6 +14,7 @@ import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
 import MASAEvaluation from './masa_evaluation';
 import History from './history';
+import Patients from './patients';
 import { logoutUser } from '../actions/index';
 
 const mql = window.matchMedia('(min-width: 992px)');
@@ -130,7 +131,13 @@ class Layout extends Component {
                     </Link>
                 </div>
                 <ListGroup className={`${invisible}`}>
-                    <ListGroupItem><Button color="link" block>Patients</Button></ListGroupItem>
+                    <ListGroupItem>
+                        <Link
+                            className="btn btn-link btn-block"
+                            to={ROUTES.PATIENTS}>
+                            Patients
+                        </Link>
+                    </ListGroupItem>
                     <ListGroupItem>
                         <Link
                             className="btn btn-link btn-block"
@@ -188,6 +195,11 @@ class Layout extends Component {
                                 path={ROUTES.HISTORY}
                                 render={() => (
                                     isLogged ? <Route component={History}/> : (<Redirect to={ROUTES.LOGIN}/>)
+                                )}/>
+                            <Route
+                                path={ROUTES.PATIENTS}
+                                render={() => (
+                                    isLogged ? <Route component={Patients}/> : (<Redirect to={ROUTES.LOGIN}/>)
                                 )}/>
                         </Switch>
                     </Container>
