@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "^4.0.0-beta",
     "cross-env": "^5.0.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",

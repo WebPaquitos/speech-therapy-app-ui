@@ -7,9 +7,9 @@ import { FaBars } from 'react-icons/lib/fa';
 import avatarImg from '../assets/img/avatar.png';
 import JoanaImg from '../assets/img/joana_avatar.jpg';
 import { ROUTES } from '../common/constants';
-import Login from '../components/login';
-import Register from '../components/register';
-import Logout from '../components/logout';
+import Login from '../components/auth/login';
+import Register from '../components/auth/register';
+import Logout from '../components/auth/logout';
 import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
 import MASAEvaluation from './masa_evaluation';
@@ -166,7 +166,7 @@ class Layout extends Component {
                     onSetOpen={this.onSetSidebarOpen}
                     sidebarClassName="sidebar-ct"
                     styles={sidebarContentStyle}>
-                    <div className="hidden-lg-up">
+                    <div className="d-lg-none d-xl-none">
                         <Button color="link" size="lg" onClick={this.onSetSidebarOpenClicked}><FaBars/></Button>
                     </div>
                     <Container>

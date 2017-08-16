@@ -25,7 +25,7 @@ const NewEvaluation = () => {
                                     width="100%"
                                     src={MASAImg}
                                     alt="Card image cap" />
-                                <CardBlock>
+                                <CardBlock className="card-body">
                                     <CardTitle>MASA</CardTitle>
                                     <CardText>
                                         MASA test to quickly evaluate the state of the patient relating to deglutation and other parameters.
@@ -46,7 +46,7 @@ const NewEvaluation = () => {
                                     width="100%"
                                     src={OtherImg}
                                     alt="Card image cap" />
-                                <CardBlock>
+                                <CardBlock className="card-body">
                                     <CardTitle>Other tests</CardTitle>
                                     <CardText>
                                         Other tests with custom parameters are coming soon to this platform. Stay tuned.
