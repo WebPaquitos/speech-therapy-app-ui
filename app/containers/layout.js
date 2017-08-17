@@ -119,7 +119,7 @@ class Layout extends Component {
         const invisible = !isLogged ? 'invisible' : '';
         const sidebarContent = (
             <div>
-                <img src={user.name === 'Joana Faria' ? JoanaImg : avatarImg} alt="avatar" className="img-fluid mx-auto d-block"/>
+                <img src={isLogged && user.name === 'Joana Faria' ? JoanaImg : avatarImg} alt="avatar" className="img-fluid mx-auto d-block"/>
                 <br/>
                 <h2>{isLogged ? user.name : 'Please Login'}</h2>
                 <br/>

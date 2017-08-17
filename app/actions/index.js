@@ -6,7 +6,7 @@ import {
     STORAGE_KEYS, EMPTY_SESSION,
     FETCH_MASA, FETCH_PATIENTS,
 } from '../common/constants';
-import { saveJSONInStorage } from '../common/utils';
+import { saveJSONInStorage, removeJSONInStorage } from '../common/utils';
 
 axios.defaults.withCredentials = true;
 
@@ -26,7 +26,7 @@ export function loginUser(values, callback) {
 
 export function logoutUser() {
     axios.get(`${API_ENDPOINT}/logout`);
-    saveJSONInStorage(STORAGE_KEYS.SESSION, EMPTY_SESSION);
+    removeJSONInStorage(STORAGE_KEYS.SESSION);
     return {
         type: LOGOUT_USER,
         payload: EMPTY_SESSION,

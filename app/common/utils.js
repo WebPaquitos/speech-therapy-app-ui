@@ -13,3 +13,11 @@ export function saveJSONInStorage(key, value) {
         throw new Error(e);
     }
 }
+
+export function removeJSONInStorage(key) {
+    try {
+        localStorage.removeItem(key);
+    } catch (e) {
+        throw new Error(e);
+    }
+}

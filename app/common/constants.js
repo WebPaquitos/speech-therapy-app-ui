@@ -1,4 +1,4 @@
-export const API_ENDPOINT = 'http://192.168.2.2:7771';
+export const API_ENDPOINT = 'http://192.168.1.30:7771';
 export const LOG_USER = 'LOG_USER';
 export const LOG_USER_PENDING = 'LOG_USER_PENDING';
 export const LOG_USER_FULFILLED = 'LOG_USER_FULFILLED';
