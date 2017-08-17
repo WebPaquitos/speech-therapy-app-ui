@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Jumbotron, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
 import { FaUser, FaLock } from 'react-icons/lib/fa';
-import { loginUser } from '../../actions/index';
+import { loginUser } from '../../actions';
 import { ROUTES } from '../../common/constants';
 
 class Login extends Component {

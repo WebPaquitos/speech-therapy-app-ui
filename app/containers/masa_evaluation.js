@@ -2,7 +2,7 @@ import Datepicker from 'react-datepicker';
 import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
-import { submitMASA, fetchMASAModel } from '../actions/index';
+import { submitMASA, fetchMASAModel } from '../actions';
 import { ROUTES } from '../common/constants';
 
 class MASAEvaluation extends Component {

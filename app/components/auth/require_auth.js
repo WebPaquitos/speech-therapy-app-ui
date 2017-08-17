@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { ROUTES } from '../../common/constants';
 
-export default function (ComposedComponent) {
+export default function (ComponentToCompose) {
     class Authentication extends Component {
-        static contextTypes = {
-            router: React.PropTypes.Object,
-        };
-
         componentWillMount() {
-            if (!this.props.session.isLogged) this.context.router.push('/');
+            if (!this.props.session.isLogged) this.props.history.push(ROUTES.LOGIN);
         }
 
         componentWillUpdate(nextProps) {
-            if (!nextProps.session.isLogged) this.context.router.push('/');
+            if (!nextProps.session.isLogged) nextProps.history.push(ROUTES.LOGIN);
         }
 
         render() {
-            return <ComposedComponent {...this.props}/>;
+            return <ComponentToCompose {...this.props}/>;
         }
     }
 

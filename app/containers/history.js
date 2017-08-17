@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table } from 'reactstrap';
-import { fetchHistory } from '../actions/index';
+import { fetchHistory } from '../actions';
 import { ROUTES } from '../common/constants';
 
 class History extends Component {

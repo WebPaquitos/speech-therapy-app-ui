@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Sidebar from 'react-sidebar';
 import { connect } from 'react-redux';
-import { Link, BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Link, BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Button, ListGroup, ListGroupItem, Container } from 'reactstrap';
 import { FaBars } from 'react-icons/lib/fa';
 import avatarImg from '../assets/img/avatar.png';
@@ -15,7 +15,9 @@ import NewEvaluation from '../components/new_evaluation';
 import MASAEvaluation from './masa_evaluation';
 import History from './history';
 import Patients from './patients';
-import { logoutUser } from '../actions/index';
+import RequireAuth from '../components/auth/require_auth';
+import Index from '../containers/index';
+import { logoutUser } from '../actions';
 
 const mql = window.matchMedia('(min-width: 992px)');
 
@@ -171,36 +173,15 @@ class Layout extends Component {
                     </div>
                     <Container>
                         <Switch>
-                            <Route
-                                exact
-                                path={ROUTES.BASE}
-                                render={() => (
-                                    isLogged ? (<Redirect to={ROUTES.DASHBOARD}/>) : (<Redirect to={ROUTES.LOGIN}/>)
-                                )}/>
+                            <Route exact path={ROUTES.BASE} component={Index}/>
                             <Route path={ROUTES.LOGIN} component={Login}/>
                             <Route path={ROUTES.LOGOUT} component={Logout}/>
                             <Route path={ROUTES.REGISTER} component={Register}/>
-                            <Route path={ROUTES.DASHBOARD} component={Dashboard}/>
-                            <Route
-                                path={ROUTES.NEW_EVALUATION}
-                                render={() => (
-                                    isLogged ? <Route component={NewEvaluation}/> : (<Redirect to={ROUTES.LOGIN}/>)
-                                )}/>
-                            <Route
-                                path={ROUTES.MASA_TEST}
-                                render={() => (
-                                    isLogged ? <Route component={MASAEvaluation}/> : (<Redirect to={ROUTES.LOGIN}/>)
-                                )}/>
-                            <Route
-                                path={ROUTES.HISTORY}
-                                render={() => (
-                                    isLogged ? <Route component={History}/> : (<Redirect to={ROUTES.LOGIN}/>)
-                                )}/>
-                            <Route
-                                path={ROUTES.PATIENTS}
-                                render={() => (
-                                    isLogged ? <Route component={Patients}/> : (<Redirect to={ROUTES.LOGIN}/>)
-                                )}/>
+                            <Route path={ROUTES.DASHBOARD} component={RequireAuth(Dashboard)}/>
+                            <Route path={ROUTES.NEW_EVALUATION} component={RequireAuth(NewEvaluation)}/>
+                            <Route path={ROUTES.MASA_TEST} component={RequireAuth(MASAEvaluation)}/>
+                            <Route path={ROUTES.HISTORY} component={RequireAuth(History)}/>
+                            <Route path={ROUTES.PATIENTS} component={RequireAuth(Patients)}/>
                         </Switch>
                     </Container>
                 </Sidebar>
