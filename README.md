@@ -1,6 +1,16 @@
 # Speech Therapy App UI
 
 Report tool for assisting in evaluations.
+Technologies used:
+- `react v15.6.1`
+- `redux v3.7.1`
+- `react-redux v5.0.5`
+- `react-router-dom v4.1.1`
+- `redux-form v6.8.0`
+- `bootstrap v4.0.0-beta`
+- `reactstrap v4.8.0`
+- `webpack v3.0.0`
+- `webpack-dev-server v2.5.0`
 
 ## Starting the dev server
 
