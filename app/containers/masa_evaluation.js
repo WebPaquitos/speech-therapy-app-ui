@@ -9,6 +9,12 @@ class MASAEvaluation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: {
+                value: '',
+                focused: false,
+                touched: false,
+                error: null,
+            },
             name: {
                 value: '',
                 focused: false,
@@ -37,6 +43,7 @@ class MASAEvaluation extends Component {
         this.showErrors = this.showErrors.bind(this);
         this.validate = this.validate.bind(this);
         this.renderOptions = this.renderOptions.bind(this);
+        this.renderField = this.renderField.bind(this);
     }
 
     componentWillMount() {
@@ -118,6 +125,7 @@ class MASAEvaluation extends Component {
         const errors = {};
         if (temp) {
             if (e.target.name === 'name' && values.name.touched && !values.name.value) errors.name = 'Field required';
+            if (e.target.name === 'id' && values.id.touched && !values.id.value) errors.id = 'Field required';
         } else if (!values.name.value) errors.name = 'Field required';
         Object.keys(values).filter(k => !ignoreFields.includes(k)).forEach((key) => {
             if (temp) {
@@ -178,6 +186,25 @@ class MASAEvaluation extends Component {
         });
     }
 
+    renderField({ name, placeholder, type, value, error, required = false }) {
+        return (
+            <div className={`form-group ${required && error ? 'has-danger' : ''}`}>
+                <Input
+                    name={name}
+                    className="form-control"
+                    placeholder={placeholder}
+                    type={type}
+                    onChange={this.onInputChange}
+                    onFocus={this.onInputFocus}
+                    onBlur={this.onInputBlur}
+                    value={value}/>
+                <div className="text-sm-left text-danger">
+                    {error || ''}
+                </div>
+            </div>
+        );
+    }
+
     render() {
         return (
             <div className="content">
@@ -189,20 +216,22 @@ class MASAEvaluation extends Component {
                                 <Col>
                                     <FormGroup tag="fieldset">
                                         <legend className="col-form-legend text-primary big-text">Patient Data</legend>
-                                        <div className={`form-group ${this.state.name.error ? 'has-danger' : ''}`}>
-                                            <Input
-                                                name="name"
-                                                className="form-control"
-                                                placeholder="Name"
-                                                type="text"
-                                                onChange={this.onInputChange}
-                                                onFocus={this.onInputFocus}
-                                                onBlur={this.onInputBlur}
-                                                value={this.state.name.value}/>
-                                            <div className="text-sm-left text-danger">
-                                                {this.state.name.error ? this.state.name.error : ''}
-                                            </div>
-                                        </div>
+                                        {this.renderField({
+                                            name: 'id',
+                                            placeholder: 'Patient id',
+                                            type: 'text',
+                                            value: this.state.id.value,
+                                            error: this.state.id.error,
+                                            required: true,
+                                        })}
+                                        {this.renderField({
+                                            name: 'name',
+                                            placeholder: 'Name',
+                                            type: 'text',
+                                            value: this.state.name.value,
+                                            error: this.state.name.error,
+                                            required: true,
+                                        })}
                                         <div className="form-group">
                                             <Datepicker
                                                 selected={this.state.birthdate.value}
@@ -223,20 +252,13 @@ class MASAEvaluation extends Component {
                                                 {this.state.birthdate.error ? this.state.birthdate.error : ''}
                                             </div>
                                         </div>
-                                        <div className="form-group">
-                                            <Input
-                                                name="description"
-                                                className="form-control"
-                                                placeholder="Additional data"
-                                                type="text"
-                                                onChange={this.onInputChange}
-                                                onFocus={this.onInputFocus}
-                                                onBlur={this.onInputBlur}
-                                                value={this.state.description.value}/>
-                                            <div className="text-sm-left text-danger">
-                                                {this.state.description.error ? this.state.description.error : ''}
-                                            </div>
-                                        </div>
+                                        {this.renderField({
+                                            name: 'description',
+                                            placeholder: 'Additional data',
+                                            type: 'text',
+                                            value: this.state.description.value,
+                                            error: this.state.description.error,
+                                        })}
                                     </FormGroup>
                                     {this.renderOptions()}
                                     <button type="submit" className="btn btn-primary">Submit</button>
