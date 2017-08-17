@@ -102,6 +102,7 @@ export function submitMASA({ masaModel, values }, callback) {
     return (dispatch) => {
         const masaClone = { ...masaModel };
         masaClone.patient = {
+            id: values.id.value,
             name: values.name.value,
             birthdate: values.birthdate.value.toDate(),
             description: values.description.value || null,

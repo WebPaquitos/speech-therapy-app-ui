@@ -96,7 +96,7 @@ const config = {
             ignore: [],
             copyUnmodified: false,
         }),
-        new webpack.HotModuleReplacementPlugin(),
+        new webpack.HotModuleReplacementPlugin({ multistep: false }),
     ],
 };
 

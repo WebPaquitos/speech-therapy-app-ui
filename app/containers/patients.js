@@ -16,7 +16,7 @@ class Patients extends Component {
             return (
                 <tr key={patient.name}>
                     <th>
-                        <Link to={`${ROUTES.PATIENTS}/${patient.name}`}>
+                        <Link to={`${ROUTES.PATIENTS}/${patient.id}`}>
                             {patient.name}
                         </Link>
                     </th>
