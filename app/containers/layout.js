@@ -25,13 +25,11 @@ class Layout extends Component {
     constructor(props) {
         super(props);
         const { docked, open } = props;
-
         this.state = {
             mql,
             docked,
             open,
         };
-
         this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
         this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
         this.onSetSidebarOpenClicked = this.onSetSidebarOpenClicked.bind(this);
@@ -136,14 +134,16 @@ class Layout extends Component {
                     <ListGroupItem>
                         <Link
                             className="btn btn-link btn-block"
-                            to={ROUTES.PATIENTS}>
+                            to={ROUTES.PATIENTS}
+                            onClick={this.onSidebarActionClicked}>
                             Patients
                         </Link>
                     </ListGroupItem>
                     <ListGroupItem>
                         <Link
                             className="btn btn-link btn-block"
-                            to={ROUTES.HISTORY}>
+                            to={ROUTES.HISTORY}
+                            onClick={this.onSidebarActionClicked}>
                             History
                         </Link>
                     </ListGroupItem>
