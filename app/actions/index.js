@@ -11,16 +11,19 @@ import { saveJSONInStorage, removeJSONInStorage } from '../common/utils';
 axios.defaults.withCredentials = true;
 
 export function loginUser(values, callback) {
-    const loggingUser = axios.post(`${API_ENDPOINT}/login`, values);
-    loggingUser.then(({ data }) => {
-        saveJSONInStorage(STORAGE_KEYS.SESSION, data);
-        callback();
-    }).catch((error) => {
-        console.log(error);
-    });
-    return {
-        type: LOG_USER,
-        payload: loggingUser,
+    return (dispatch) => {
+        axios.post(`${API_ENDPOINT}/login`, values)
+        .then(({ data }) => {
+            dispatch({
+                type: LOG_USER,
+                payload: data,
+            });
+            saveJSONInStorage(STORAGE_KEYS.SESSION, data);
+            callback();
+        })
+        .catch(({ response }) => {
+            console.log(response);
+        });
     };
 }
 
@@ -34,62 +37,89 @@ export function logoutUser() {
 }
 
 export function registerUser({ name, email, password }, callback) {
-    const registeringUser = axios.post(`${API_ENDPOINT}/register`, { name, email, password });
-    registeringUser.then(({ data }) => {
-        saveJSONInStorage(STORAGE_KEYS.SESSION, data);
-        callback();
-    }).catch((error) => {
-        console.log(error);
-    });
-    return {
-        type: REGISTER_USER,
-        payload: registeringUser,
+    return (dispatch) => {
+        axios.post(`${API_ENDPOINT}/register`, { name, email, password })
+        .then(({ data }) => {
+            dispatch({
+                type: REGISTER_USER,
+                payload: data,
+            });
+            saveJSONInStorage(STORAGE_KEYS.SESSION, data);
+            callback();
+        })
+        .catch(({ response }) => {
+            console.log(response);
+        });
     };
 }
 
 export function fetchHistory() {
-    const fetchingHistory = axios.get(`${API_ENDPOINT}/masas`);
-    return {
-        type: FETCH_HISTORY,
-        payload: fetchingHistory,
+    return (dispatch) => {
+        axios.get(`${API_ENDPOINT}/masas`)
+        .then(({ data }) => {
+            dispatch({
+                type: FETCH_HISTORY,
+                payload: data,
+            });
+        })
+        .catch(({ response }) => {
+            console.log(response);
+        });
     };
 }
 
 export function fetchPatients() {
-    const fetchingPatients = axios.get(`${API_ENDPOINT}/patients`);
-    return {
-        type: FETCH_PATIENTS,
-        payload: fetchingPatients,
+    return (dispatch) => {
+        axios.get(`${API_ENDPOINT}/patients`)
+        .then(({ data }) => {
+            dispatch({
+                type: FETCH_PATIENTS,
+                payload: data,
+            });
+        })
+        .catch(({ response }) => {
+            console.log(response);
+        });
     };
 }
 
 export function fetchMASAModel() {
-    const fetchingMASA = axios.get(`${API_ENDPOINT}/masa`);
-    return {
-        type: FETCH_MASA,
-        payload: fetchingMASA,
+    return (dispatch) => {
+        axios.get(`${API_ENDPOINT}/masa`)
+        .then(({ data }) => {
+            dispatch({
+                type: FETCH_MASA,
+                payload: data,
+            });
+        })
+        .catch(({ response }) => {
+            console.log(response);
+        });
     };
 }
 
 export function submitMASA({ masaModel, values }, callback) {
-    const masaClone = { ...masaModel };
-    masaClone.patient = {
-        name: values.name.value,
-        birthdate: values.birthdate.value.toDate(),
-        description: values.description.value || null,
-    };
-    Object.keys(values).forEach((key) => {
-        const field = masaClone.fields.find(({ name }) => name === key);
-        if (field) field.chosen = values[key].value;
-    });
-    const submittingMASA = axios.post(`${API_ENDPOINT}/masa`, masaClone);
-    submittingMASA.then(() => {
-        callback();
-    }).catch((error) => {
-        console.log(error);
-    });
-    return {
-        type: MASA_SUBMIT,
-        payload: submittingMASA,
+    return (dispatch) => {
+        const masaClone = { ...masaModel };
+        masaClone.patient = {
+            name: values.name.value,
+            birthdate: values.birthdate.value.toDate(),
+            description: values.description.value || null,
+        };
+        Object.keys(values).forEach((key) => {
+            const field = masaClone.fields.find(({ name }) => name === key);
+            if (field) field.chosen = values[key].value;
+        });
+        axios.post(`${API_ENDPOINT}/masa`, masaClone)
+        .then(({ data }) => {
+            dispatch({
+                type: MASA_SUBMIT,
+                payload: data,
+            });
+            callback();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     };
 }

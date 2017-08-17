@@ -5,22 +5,20 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { AppContainer } from 'react-hot-loader';
-import PromiseMiddleware from 'redux-promise-middleware';
+import PromiseMiddleware from 'redux-thunk';
 import Layout from './containers/layout';
 import reducers from './reducers';
 import { getJSONFromStorage } from './common/utils';
-import { STORAGE_KEYS, EMPTY_SESSION, LOG_USER_FULFILLED } from './common/constants';
+import { STORAGE_KEYS, EMPTY_SESSION, LOG_USER } from './common/constants';
 
-const createStoreWithMiddleware = applyMiddleware(PromiseMiddleware())(createStore);
+const createStoreWithMiddleware = applyMiddleware(PromiseMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
 const session = getJSONFromStorage(STORAGE_KEYS.SESSION) || EMPTY_SESSION;
 if (session.isLogged) {
     store.dispatch({
-        type: LOG_USER_FULFILLED,
-        payload: {
-            data: session,
-        },
+        type: LOG_USER,
+        payload: session,
     });
 }
 
