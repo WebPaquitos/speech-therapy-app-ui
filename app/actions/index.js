@@ -5,6 +5,7 @@ import {
     FETCH_HISTORY, MASA_SUBMIT,
     STORAGE_KEYS, EMPTY_SESSION,
     FETCH_MASA, FETCH_PATIENTS,
+    FETCH_HISTORY_ITEM,
 } from '../common/constants';
 import { saveJSONInStorage, removeJSONInStorage } from '../common/utils';
 
@@ -59,6 +60,21 @@ export function fetchHistory() {
         .then(({ data }) => {
             dispatch({
                 type: FETCH_HISTORY,
+                payload: data,
+            });
+        })
+        .catch(({ response }) => {
+            console.log(response);
+        });
+    };
+}
+
+export function fetchHistoryItem(id) {
+    return (dispatch) => {
+        axios.get(`${API_ENDPOINT}/masas/${id}`)
+        .then(({ data }) => {
+            dispatch({
+                type: FETCH_HISTORY_ITEM,
                 payload: data,
             });
         })

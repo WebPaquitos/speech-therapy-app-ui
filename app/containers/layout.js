@@ -14,6 +14,7 @@ import Dashboard from '../components/dashboard';
 import NewEvaluation from '../components/new_evaluation';
 import MASAEvaluation from './masa_evaluation';
 import History from './history';
+import HistoryItem from './history_item';
 import Patients from './patients';
 import RequireAuth from '../components/auth/require_auth';
 import Index from '../containers/index';
@@ -180,6 +181,7 @@ class Layout extends Component {
                             <Route path={ROUTES.DASHBOARD} component={RequireAuth(Dashboard)}/>
                             <Route path={ROUTES.NEW_EVALUATION} component={RequireAuth(NewEvaluation)}/>
                             <Route path={ROUTES.MASA_TEST} component={RequireAuth(MASAEvaluation)}/>
+                            <Route path={ROUTES.SHOW_HISTORY_ITEM} component={RequireAuth(HistoryItem)}/>
                             <Route path={ROUTES.HISTORY} component={RequireAuth(History)}/>
                             <Route path={ROUTES.PATIENTS} component={RequireAuth(Patients)}/>
                         </Switch>

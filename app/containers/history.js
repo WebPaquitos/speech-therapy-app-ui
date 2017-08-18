@@ -1,3 +1,4 @@
+import { FaEye } from 'react-icons/lib/fa';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -17,12 +18,11 @@ class History extends Component {
             return (
                 <tr key={id}>
                     <th scope="row">{id}</th>
-                    <td>
-                        <Link to={`${ROUTES.HISTORY}/${id}`}>
-                            {historyCase.patient.name}
-                        </Link>
-                    </td>
+                    <td>{historyCase.patient.name}</td>
                     <td>{historyCase.patient.description}</td>
+                    <td>
+                        <Link to={`${ROUTES.HISTORY}/${id}`}>{FaEye()}</Link>
+                    </td>
                 </tr>
             );
         });
@@ -42,6 +42,7 @@ class History extends Component {
                                             <th>Id</th>
                                             <th>Patient name</th>
                                             <th>Patient data</th>
+                                            <th/>
                                         </tr>
                                     </thead>
                                     <tbody>

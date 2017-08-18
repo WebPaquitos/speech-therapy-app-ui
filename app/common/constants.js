@@ -1,11 +1,12 @@
 export const API_ENDPOINT = 'http://192.168.1.30:7771';
-export const LOG_USER = 'LOG_USER';
-export const LOGOUT_USER = 'LOGOUT_USER';
-export const REGISTER_USER = 'REGISTER_USER';
-export const FETCH_HISTORY = 'FETCH_HISTORY';
-export const FETCH_PATIENTS = 'FETCH_PATIENTS';
-export const FETCH_MASA = 'FETCH_MASA';
-export const MASA_SUBMIT = 'MASA_SUBMIT';
+export const LOG_USER = 'log_user';
+export const LOGOUT_USER = 'logout_user';
+export const REGISTER_USER = 'register_user';
+export const FETCH_HISTORY = 'fetch_history';
+export const FETCH_HISTORY_ITEM = 'fetch_history_item';
+export const FETCH_PATIENTS = 'fetch_patients';
+export const FETCH_MASA = 'fetch_masa';
+export const MASA_SUBMIT = 'masa_submit';
 export const STORAGE_KEYS = {
     SESSION: 'session',
 };
@@ -23,7 +24,7 @@ export const ROUTES = {
     NEW_EVALUATION: '/start_evaluation',
     MASA_TEST: '/masa_evaluation',
     HISTORY: '/history',
-    SHOW_HISTORY_CASE: '/history/:id',
+    SHOW_HISTORY_ITEM: '/history/:id',
     PATIENTS: '/patients',
     SHOW_PATIENT: '/patients/:id',
 };

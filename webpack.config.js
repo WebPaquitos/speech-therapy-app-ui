@@ -85,6 +85,9 @@ const config = {
                     failOnWarning: false,
                     failOnError: false,
                     emitWarning: true,
+                    rules: {
+                        'no-underscore-dangle': 'off',
+                    },
                 },
             },
         }),

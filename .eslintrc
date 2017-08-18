@@ -30,6 +30,7 @@
             "error",
             4
         ],
+        "no-underscore-dangle": "off",
         "class-methods-use-this": "off",
         "no-unreachable": "off",
         "react/jsx-tag-spacing": 0,
