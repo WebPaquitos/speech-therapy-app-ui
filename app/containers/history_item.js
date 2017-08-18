@@ -32,7 +32,7 @@ class HistoryItem extends Component {
                                     </ListGroupItem>
                                     {masa.fields.map((field) => {
                                         return (
-                                            <ListGroupItem>
+                                            <ListGroupItem key={field.name}>
                                                 <ListGroupItemHeading>{field.label}</ListGroupItemHeading>
                                                 <ListGroupItemText>
                                                     <strong>{field.chosen}</strong>
