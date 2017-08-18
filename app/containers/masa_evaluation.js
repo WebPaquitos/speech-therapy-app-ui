@@ -1,8 +1,9 @@
 import Datepicker from 'react-datepicker';
+import moment from 'moment';
 import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
-import { submitMASA, fetchMASAModel } from '../actions';
+import { submitMASA, fetchMASAModel, fetchPatients } from '../actions';
 import { ROUTES } from '../common/constants';
 
 class MASAEvaluation extends Component {
@@ -33,6 +34,12 @@ class MASAEvaluation extends Component {
                 touched: false,
                 error: null,
             },
+            patientSelected: {
+                value: {},
+                focused: false,
+                touched: false,
+                error: null,
+            },
         };
         this.onMASASubmitClicked = this.onMASASubmitClicked.bind(this);
         this.onDateChange = this.onDateChange.bind(this);
@@ -48,6 +55,7 @@ class MASAEvaluation extends Component {
 
     componentWillMount() {
         this.props.fetchMASAModel();
+        this.props.fetchPatients();
     }
 
     componentDidMount() {
@@ -90,13 +98,43 @@ class MASAEvaluation extends Component {
     }
 
     onInputChange(e) {
-        this.setState({
-            [e.target.name]: {
-                ...this.state[e.target.name],
-                value: e.target.value,
-                error: (!e.target.value ? this.state[e.target.name].error : null),
-            },
-        });
+        if (e.target.name === 'patientSelected') {
+            const patient = this.props.patients.find(p => p.id === e.target.value);
+            this.setState({
+                patientSelected: {
+                    ...this.state.patientSelected,
+                    value: patient || {},
+                },
+                id: {
+                    ...this.state.id,
+                    value: patient ? patient.id : '',
+                    error: null,
+                },
+                name: {
+                    ...this.state.name,
+                    value: patient ? patient.name : '',
+                    error: null,
+                },
+                birthdate: {
+                    ...this.state.birthdate,
+                    value: patient ? moment(patient.birthdate) : null,
+                    error: null,
+                },
+                description: {
+                    ...this.state.description,
+                    value: patient ? patient.description : '',
+                    error: null,
+                },
+            });
+        } else {
+            this.setState({
+                [e.target.name]: {
+                    ...this.state[e.target.name],
+                    value: e.target.value,
+                    error: (!e.target.value ? this.state[e.target.name].error : null),
+                },
+            });
+        }
     }
 
     onInputFocus(e) {
@@ -186,9 +224,20 @@ class MASAEvaluation extends Component {
         });
     }
 
-    renderField({ name, placeholder, type, value, error, required = false }) {
-        return (
-            <div className={`form-group ${required && error ? 'has-danger' : ''}`}>
+    renderField({ name, placeholder = '', type, value, error, required = false, options = [] }) {
+        let input = (
+            <Input
+                name={name}
+                className="form-control"
+                placeholder={placeholder}
+                type={type}
+                onChange={this.onInputChange}
+                onFocus={this.onInputFocus}
+                onBlur={this.onInputBlur}
+                value={value}/>
+        );
+        if (options.length) {
+            input = (
                 <Input
                     name={name}
                     className="form-control"
@@ -197,7 +246,15 @@ class MASAEvaluation extends Component {
                     onChange={this.onInputChange}
                     onFocus={this.onInputFocus}
                     onBlur={this.onInputBlur}
-                    value={value}/>
+                    value={value.id}>
+                    <option value="">N/A</option>
+                    {options.map(patient => <option key={patient.id} value={patient.id}>{patient.name}</option>)}
+                </Input>
+            );
+        }
+        return (
+            <div className={`form-group ${required && error ? 'has-danger' : ''}`}>
+                {input}
                 <div className="text-sm-left text-danger">
                     {error || ''}
                 </div>
@@ -216,6 +273,13 @@ class MASAEvaluation extends Component {
                                 <Col>
                                     <FormGroup tag="fieldset">
                                         <legend className="col-form-legend text-primary big-text">Patient Data</legend>
+                                        {this.renderField({
+                                            name: 'patientSelected',
+                                            type: 'select',
+                                            value: this.state.patientSelected.value,
+                                            error: this.state.patientSelected.error,
+                                            options: this.props.patients,
+                                        })}
                                         {this.renderField({
                                             name: 'id',
                                             placeholder: 'Patient id',
@@ -272,11 +336,12 @@ class MASAEvaluation extends Component {
     }
 }
 
-function mapStateToProps({ masa }) {
+function mapStateToProps({ masa, patients }) {
     return {
         masa,
+        patients,
     };
 }
 
 
-export default connect(mapStateToProps, { submitMASA, fetchMASAModel })(MASAEvaluation);
+export default connect(mapStateToProps, { submitMASA, fetchMASAModel, fetchPatients })(MASAEvaluation);
