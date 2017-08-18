@@ -30,7 +30,7 @@ class HistoryItem extends Component {
 
 function mapStateToProps({ history }, ownProps) {
     return {
-        masa: history.find(m => m._id === ownProps.match.params.id),
+        masa: history[ownProps.match.params.id],
     };
 }
 

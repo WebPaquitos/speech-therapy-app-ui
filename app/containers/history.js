@@ -13,15 +13,15 @@ class History extends Component {
 
     renderHistory() {
         const { history } = this.props;
-        return history.map((historyCase) => {
-            const id = historyCase._id;
+        return Object.keys(history).map((key) => {
+            const { _id, patient } = history[key];
             return (
-                <tr key={id}>
-                    <th scope="row">{id}</th>
-                    <td>{historyCase.patient.name}</td>
-                    <td>{historyCase.patient.description}</td>
+                <tr key={_id}>
+                    <th scope="row">{_id}</th>
+                    <td>{patient.name}</td>
+                    <td>{patient.description}</td>
                     <td>
-                        <Link to={`${ROUTES.HISTORY}/${id}`}>{FaEye()}</Link>
+                        <Link to={`${ROUTES.HISTORY}/${_id}`}>{FaEye()}</Link>
                     </td>
                 </tr>
             );

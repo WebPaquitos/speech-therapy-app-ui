@@ -99,7 +99,7 @@ class MASAEvaluation extends Component {
 
     onInputChange(e) {
         if (e.target.name === 'patientSelected') {
-            const patient = this.props.patients.find(p => p.id === e.target.value);
+            const patient = this.props.patients[e.target.value];
             this.setState({
                 patientSelected: {
                     ...this.state.patientSelected,
@@ -224,7 +224,7 @@ class MASAEvaluation extends Component {
         });
     }
 
-    renderField({ name, placeholder = '', type, value, error, required = false, options = [] }) {
+    renderField({ name, placeholder = '', type, value, error, required = false, options = {} }) {
         let input = (
             <Input
                 name={name}
@@ -236,7 +236,7 @@ class MASAEvaluation extends Component {
                 onBlur={this.onInputBlur}
                 value={value}/>
         );
-        if (options.length) {
+        if (Object.keys(options).length) {
             input = (
                 <Input
                     name={name}
@@ -248,7 +248,7 @@ class MASAEvaluation extends Component {
                     onBlur={this.onInputBlur}
                     value={value.id}>
                     <option value="">N/A</option>
-                    {options.map(patient => <option key={patient.id} value={patient.id}>{patient.name}</option>)}
+                    {Object.keys(options).map(k => <option key={options[k].id} value={options[k].id}>{options[k].name}</option>)}
                 </Input>
             );
         }

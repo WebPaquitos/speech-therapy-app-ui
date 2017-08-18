@@ -3,6 +3,7 @@ const { resolve } = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
     devtool: 'cheap-module-eval-source-map',
@@ -98,6 +99,9 @@ const config = {
         ], {
             ignore: [],
             copyUnmodified: false,
+        }),
+        new HtmlWebpackPlugin({
+            template: 'index.html',
         }),
         new webpack.HotModuleReplacementPlugin({ multistep: false }),
     ],

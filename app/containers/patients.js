@@ -12,7 +12,8 @@ class Patients extends Component {
 
     renderPatients() {
         const { patients } = this.props;
-        return patients.map((patient) => {
+        return Object.keys(patients).map((key) => {
+            const patient = patients[key];
             return (
                 <tr key={patient.name}>
                     <th>
