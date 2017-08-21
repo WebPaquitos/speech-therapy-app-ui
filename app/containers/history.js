@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, Table } from 'reactstrap';
 import { fetchHistory } from '../actions';
+import { formatDate } from '../common/utils';
 import { ROUTES } from '../common/constants';
 
 class History extends Component {
@@ -14,10 +15,10 @@ class History extends Component {
     renderHistory() {
         const { history } = this.props;
         return Object.keys(history).map((key) => {
-            const { _id, patient: { name }, score, scoreLabelAspiracao, scoreLabelDisfagia } = history[key];
+            const { _id, created, patient: { name }, score, scoreLabelAspiracao, scoreLabelDisfagia } = history[key];
             return (
                 <tr key={_id}>
-                    <td>{_id}</td>
+                    <td>{formatDate(new Date(created))}</td>
                     <td>{name}</td>
                     <td>{score}</td>
                     <td>{scoreLabelAspiracao}</td>
@@ -41,7 +42,7 @@ class History extends Component {
                                 <Table responsive hover>
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
+                                            <th>Evaluation date</th>
                                             <th>Patient name</th>
                                             <th>Score</th>
                                             <th>Dysphagia Category</th>

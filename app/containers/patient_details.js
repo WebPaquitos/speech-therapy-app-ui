@@ -4,6 +4,7 @@ import { Row, Col, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/lib/fa';
 import { ROUTES } from '../common/constants';
+import { formatDate } from '../common/utils';
 import { fetchPatient } from '../actions';
 
 class PatientDetails extends Component {
@@ -15,10 +16,10 @@ class PatientDetails extends Component {
         const { history } = this.props.patient;
         if (!history) return null;
         return history.map((patientCase) => {
-            const { _id, score, scoreLabelAspiracao, scoreLabelDisfagia } = patientCase;
+            const { _id, created, score, scoreLabelAspiracao, scoreLabelDisfagia } = patientCase;
             return (
                 <tr key={_id}>
-                    <td>{_id}</td>
+                    <td>{formatDate(new Date(created))}</td>
                     <td>{score}</td>
                     <td>{scoreLabelAspiracao}</td>
                     <td>{scoreLabelDisfagia}</td>
@@ -33,7 +34,6 @@ class PatientDetails extends Component {
     render() {
         const { patient } = this.props;
         if (!patient) return <div>Loading...</div>;
-        const patientBirthdate = new Date(patient.birthdate);
         return (
             <div className="content">
                 <Row>
@@ -43,7 +43,7 @@ class PatientDetails extends Component {
                             <Col xs="12" className="push-down">
                                 <h3 className="text-primary"><strong>{patient.id}</strong> - {patient.name}</h3>
                                 <small className="text-muted">
-                                    {`${patientBirthdate.getDate()}/${patientBirthdate.getMonth()}/${patientBirthdate.getFullYear()}`}
+                                    {formatDate(new Date(patient.birthdate))}
                                 </small>
                                 <p className="lead">Additional data: {patient.description}</p>
                             </Col>
@@ -58,7 +58,7 @@ class PatientDetails extends Component {
                                 <Table responsive hover>
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
+                                            <th>Evaluation Date</th>
                                             <th>Score</th>
                                             <th>Dysphagia Category</th>
                                             <th>Aspiration Category</th>

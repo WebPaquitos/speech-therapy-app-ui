@@ -1,6 +1,7 @@
 import { Row, Col, ListGroup, ListGroupItem, ListGroupItemText, ListGroupItemHeading } from 'reactstrap';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { formatDate } from '../common/utils';
 import { fetchHistoryItem } from '../actions';
 
 class HistoryItem extends Component {
@@ -11,7 +12,6 @@ class HistoryItem extends Component {
     render() {
         const { masa } = this.props;
         if (!masa) return <div>Loading...</div>;
-        const patientBirthdate = new Date(masa.patient.birthdate);
         return (
             <div className="content">
                 <Row>
@@ -23,7 +23,7 @@ class HistoryItem extends Component {
                                 <p>Dysphagia Category: <strong>{masa.scoreLabelDisfagia}</strong>
                                     | Aspiration Category: <strong>{masa.scoreLabelAspiracao}</strong></p>
                                 <small className="text-muted">
-                                    {`${patientBirthdate.getDate()}/${patientBirthdate.getMonth()}/${patientBirthdate.getFullYear()}`}
+                                    {formatDate(new Date(masa.patient.birthdate))}
                                 </small>
                                 <p className="lead">Additional data: {masa.patient.description}</p>
                             </Col>
