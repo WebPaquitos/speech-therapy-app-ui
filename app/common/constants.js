@@ -8,6 +8,12 @@ export const FETCH_PATIENTS = 'fetch_patients';
 export const FETCH_PATIENT = 'fetch_patient';
 export const FETCH_MASA = 'fetch_masa';
 export const MASA_SUBMIT = 'masa_submit';
+export const MASA_EVALUATION_CATEGORIES = {
+    NORMAL: 'Nenhuma anormalidade detectada',
+    LIGHT: 'Leve',
+    MODERATE: 'Moderado',
+    SEVERE: 'Severo',
+};
 export const STORAGE_KEYS = {
     SESSION: 'session',
 };

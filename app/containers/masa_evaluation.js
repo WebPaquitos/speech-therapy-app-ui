@@ -4,12 +4,17 @@ import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { submitMASA, fetchMASAModel, fetchPatients } from '../actions';
-import { ROUTES } from '../common/constants';
+import { ROUTES, MASA_EVALUATION_CATEGORIES } from '../common/constants';
 
 class MASAEvaluation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            score: {
+                value: 0,
+                dysphagiaCategory: 'Nenhuma anormalidade detectada',
+                aspirationCategory: 'Nenhuma anormalidade detectada',
+            },
             id: {
                 value: '',
                 focused: false,
@@ -51,6 +56,7 @@ class MASAEvaluation extends Component {
         this.validate = this.validate.bind(this);
         this.renderOptions = this.renderOptions.bind(this);
         this.renderField = this.renderField.bind(this);
+        this.manageScore = this.manageScore.bind(this);
     }
 
     componentWillMount() {
@@ -98,6 +104,7 @@ class MASAEvaluation extends Component {
     }
 
     onInputChange(e) {
+        console.log('input change');
         if (e.target.name === 'patientSelected') {
             const patient = this.props.patients[e.target.value];
             this.setState({
@@ -133,7 +140,7 @@ class MASAEvaluation extends Component {
                     value: e.target.value,
                     error: (!e.target.value ? this.state[e.target.name].error : null),
                 },
-            });
+            }, () => this.manageScore());
         }
     }
 
@@ -157,9 +164,45 @@ class MASAEvaluation extends Component {
         }, () => this.validate(true, e));
     }
 
+    getDysphagiaCategory(score) {
+        let out = MASA_EVALUATION_CATEGORIES.NORMAL;
+        if (score >= 168 && score <= 177) out = MASA_EVALUATION_CATEGORIES.LIGHT;
+        else if (score >= 139 && score <= 167) out = MASA_EVALUATION_CATEGORIES.MODERATE;
+        else if (score <= 138) out = MASA_EVALUATION_CATEGORIES.SEVERE;
+        return out;
+    }
+
+    getAspirationCategory(score) {
+        let out = MASA_EVALUATION_CATEGORIES.NORMAL;
+        if (score >= 149 && score <= 169) out = MASA_EVALUATION_CATEGORIES.LIGHT;
+        else if (score >= 148 && score <= 141) out = MASA_EVALUATION_CATEGORIES.MODERATE;
+        else if (score <= 140) out = MASA_EVALUATION_CATEGORIES.SEVERE;
+        return out;
+    }
+
+    getTotalScore() {
+        const values = this.state;
+        const ignoreFields = ['name', 'birthdate', 'description', 'id', 'score', 'patientSelected'];
+        let score = 0;
+        Object.keys(values).filter(k => !ignoreFields.includes(k)).forEach(k => score += Number(this.state[k].value));
+        return score;
+    }
+
+    manageScore() {
+        console.log('manage score!!');
+        const newScore = this.getTotalScore();
+        this.setState({
+            score: {
+                value: newScore,
+                dysphagiaCategory: this.getDysphagiaCategory(newScore),
+                aspirationCategory: this.getAspirationCategory(newScore),
+            },
+        });
+    }
+
     validateRules(temp = false, e) {
         const values = this.state;
-        const ignoreFields = ['name', 'birthdate', 'description'];
+        const ignoreFields = ['name', 'birthdate', 'description', 'id'];
         const errors = {};
         if (temp) {
             if (e.target.name === 'name' && values.name.touched && !values.name.value) errors.name = 'Field required';
@@ -271,6 +314,12 @@ class MASAEvaluation extends Component {
                         <Row>
                             <form className="form-full" onSubmit={this.onMASASubmitClicked}>
                                 <Col>
+                                    <FormGroup tag="fieldset">
+                                        <legend className="col-form-legend text-primary big-text">Test Score</legend>
+                                        <p>Score: <strong>{this.state.score.value}</strong></p>
+                                        <p>Dysphagia Category: <strong>{this.state.score.dysphagiaCategory}</strong>
+                                            | Aspiration Category: <strong>{this.state.score.aspirationCategory}</strong></p>
+                                    </FormGroup>
                                     <FormGroup tag="fieldset">
                                         <legend className="col-form-legend text-primary big-text">Patient Data</legend>
                                         {this.renderField({

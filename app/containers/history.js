@@ -36,7 +36,7 @@ class History extends Component {
             <div className="content">
                 <Row>
                     <Col xs="12">
-                        <h1 className="push-down">History</h1>
+                        <h1 className="push-down">Evaluation History</h1>
                         <Row>
                             <Col xs="12">
                                 <Table responsive hover>
