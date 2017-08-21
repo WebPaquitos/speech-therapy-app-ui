@@ -20,6 +20,8 @@ class HistoryItem extends Component {
                         <Row>
                             <Col xs="12" className="push-down">
                                 <h3 className="text-primary"><strong>{masa.patient.id}</strong> - {masa.patient.name}</h3>
+                                <p>Dysphagia Category: <strong>{masa.scoreLabelDisfagia}</strong>
+                                    | Aspiration Category: <strong>{masa.scoreLabelAspiracao}</strong></p>
                                 <small className="text-muted">
                                     {`${patientBirthdate.getDate()}/${patientBirthdate.getMonth()}/${patientBirthdate.getFullYear()}`}
                                 </small>
@@ -28,7 +30,7 @@ class HistoryItem extends Component {
                             <Col xs="12" className="push-down">
                                 <ListGroup>
                                     <ListGroupItem active>
-                                        <ListGroupItemHeading>Test results</ListGroupItemHeading>
+                                        <ListGroupItemHeading>Test results <strong>(Score: {masa.score})</strong></ListGroupItemHeading>
                                     </ListGroupItem>
                                     {masa.fields.map((field) => {
                                         return (

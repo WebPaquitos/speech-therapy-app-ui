@@ -16,6 +16,7 @@ import MASAEvaluation from './masa_evaluation';
 import History from './history';
 import HistoryItem from './history_item';
 import Patients from './patients';
+import PatientDetails from '../containers/patient_details';
 import RequireAuth from '../components/auth/require_auth';
 import Index from '../containers/index';
 import { logoutUser } from '../actions';
@@ -183,6 +184,7 @@ class Layout extends Component {
                             <Route path={ROUTES.MASA_TEST} component={RequireAuth(MASAEvaluation)}/>
                             <Route path={ROUTES.SHOW_HISTORY_ITEM} component={RequireAuth(HistoryItem)}/>
                             <Route path={ROUTES.HISTORY} component={RequireAuth(History)}/>
+                            <Route path={ROUTES.SHOW_PATIENT} component={RequireAuth(PatientDetails)}/>
                             <Route path={ROUTES.PATIENTS} component={RequireAuth(Patients)}/>
                         </Switch>
                     </Container>

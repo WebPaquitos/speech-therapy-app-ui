@@ -5,6 +5,7 @@ export const REGISTER_USER = 'register_user';
 export const FETCH_HISTORY = 'fetch_history';
 export const FETCH_HISTORY_ITEM = 'fetch_history_item';
 export const FETCH_PATIENTS = 'fetch_patients';
+export const FETCH_PATIENT = 'fetch_patient';
 export const FETCH_MASA = 'fetch_masa';
 export const MASA_SUBMIT = 'masa_submit';
 export const STORAGE_KEYS = {

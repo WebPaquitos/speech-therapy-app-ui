@@ -5,7 +5,7 @@ import {
     FETCH_HISTORY, MASA_SUBMIT,
     STORAGE_KEYS, EMPTY_SESSION,
     FETCH_MASA, FETCH_PATIENTS,
-    FETCH_HISTORY_ITEM,
+    FETCH_HISTORY_ITEM, FETCH_PATIENT,
 } from '../common/constants';
 import { saveJSONInStorage, removeJSONInStorage } from '../common/utils';
 
@@ -93,6 +93,29 @@ export function fetchPatients() {
                 payload: data,
             });
         })
+        .catch(({ response }) => {
+            console.log(response);
+        });
+    };
+}
+
+export function fetchPatient(id) {
+    return (dispatch) => {
+        const requests = [
+            axios.get(`${API_ENDPOINT}/patients/${id}`),
+            axios.get(`${API_ENDPOINT}/masas?patientid=${id}`),
+        ];
+        axios.all(requests)
+        .then(axios.spread((patient, patientHistory) => {
+            const patientFullData = {
+                ...patient.data,
+                history: patientHistory.data,
+            };
+            dispatch({
+                type: FETCH_PATIENT,
+                payload: patientFullData,
+            });
+        }))
         .catch(({ response }) => {
             console.log(response);
         });
