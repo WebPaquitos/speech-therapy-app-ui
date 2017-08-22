@@ -16,9 +16,7 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
     let stateRef = state;
-    if (action.type === LOGOUT_USER) {
-        stateRef = undefined;
-    }
+    if (action.type === LOGOUT_USER) stateRef = undefined;
     return appReducer(stateRef, action);
 };
 

@@ -3,19 +3,19 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Jumbotron, InputGroup, InputGroupAddon, Input, Row, Col } from 'reactstrap';
-import { FaUser, FaLock } from 'react-icons/lib/fa';
-import { loginUser } from '../../actions';
+import { FaLock, FaUser } from 'react-icons/lib/fa';
+import { registerUser } from '../../actions/index';
 import { ROUTES } from '../../common/constants';
 
-class Login extends Component {
+class Register extends Component {
     constructor(props) {
         super(props);
-        this.onLoginClicked = this.onLoginClicked.bind(this);
+        this.onRegisterClicked = this.onRegisterClicked.bind(this);
         this.renderField = this.renderField.bind(this);
     }
 
-    onLoginClicked(values) {
-        this.props.loginUser(values, () => {
+    onRegisterClicked(values) {
+        this.props.registerUser(values, () => {
             this.props.history.push(ROUTES.DASHBOARD);
         });
     }
@@ -54,10 +54,18 @@ class Login extends Component {
                         lg={{ size: 6 }}
                         xl={{ size: 4 }}>
                         <Jumbotron className="small-form">
-                            <form onSubmit={handleSubmit(this.onLoginClicked)}>
+                            <form onSubmit={handleSubmit(this.onRegisterClicked)}>
+                                <Field
+                                    name="name"
+                                    placeholder="enter name"
+                                    type="text"
+                                    icon={FaUser}
+                                    component={this.renderField}
+                                />
+                                <br/>
                                 <Field
                                     name="email"
-                                    placeholder="email"
+                                    placeholder="enter email"
                                     type="email"
                                     icon={FaUser}
                                     component={this.renderField}
@@ -65,22 +73,30 @@ class Login extends Component {
                                 <br/>
                                 <Field
                                     name="password"
-                                    placeholder="password"
+                                    placeholder="enter password"
+                                    type="password"
+                                    icon={FaLock}
+                                    component={this.renderField}
+                                />
+                                <br/>
+                                <Field
+                                    name="cpassword"
+                                    placeholder="confirm password"
                                     type="password"
                                     icon={FaLock}
                                     component={this.renderField}
                                 />
                                 <br/>
                                 <p className="lead d-flex justify-content-end">
-                                    <button type="submit" className="btn btn-link">Login</button>
+                                    <button type="submit" className="btn btn-link">Register</button>
                                 </p>
                             </form>
                         </Jumbotron>
                         <div className="d-flex justify-content-end">
                             <Link
                                 className="btn btn-sm btn-link follow-up-btn"
-                                to={ROUTES.REGISTER}>
-                                No account yet? Register
+                                to={ROUTES.LOGIN}>
+                                Already have an account? Login
                             </Link>
                         </div>
                     </Col>
@@ -93,11 +109,23 @@ class Login extends Component {
 function validate(values) {
     const errors = {};
 
+    if (!values.name) {
+        errors.name = 'Enter name';
+    }
     if (!values.email) {
         errors.email = 'Enter an email';
     }
     if (!values.password) {
         errors.password = 'Enter password';
+    }
+    if (!values.cpassword) {
+        errors.cpassword = 'Confirm your password';
+    }
+    if (values.password && values.cpassword) {
+        if (values.password !== values.cpassword) {
+            errors.password = 'Passwords don\'t match';
+            errors.cpassword = 'Passwords don\'t match';
+        }
     }
 
     return errors;
@@ -105,7 +133,7 @@ function validate(values) {
 
 export default reduxForm({
     validate,
-    form: 'LoginForm',
+    form: 'RegisterForm',
 })(
-    connect(null, { loginUser })(Login),
+    connect(null, { registerUser })(Register),
 );
