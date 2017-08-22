@@ -54,7 +54,9 @@ class MASAEvaluation extends Component {
         this.validateRules = this.validateRules.bind(this);
         this.showErrors = this.showErrors.bind(this);
         this.validate = this.validate.bind(this);
+        this.includeOptions = this.includeOptions.bind(this);
         this.renderOptions = this.renderOptions.bind(this);
+        this.renderStaticOptions = this.renderStaticOptions.bind(this);
         this.renderField = this.renderField.bind(this);
         this.manageScore = this.manageScore.bind(this);
     }
@@ -182,9 +184,7 @@ class MASAEvaluation extends Component {
     getTotalScore() {
         const values = this.state;
         const ignoreFields = ['name', 'birthdate', 'description', 'id', 'score', 'patientSelected'];
-        let score = 0;
-        Object.keys(values).filter(k => !ignoreFields.includes(k)).forEach(k => score += Number(this.state[k].value));
-        return score;
+        return Object.keys(values).filter(k => !ignoreFields.includes(k)).reduce((sum, k) => sum + Number(this.state[k].value), 0);
     }
 
     manageScore() {
@@ -231,6 +231,13 @@ class MASAEvaluation extends Component {
         return (temp ? this.showErrors(errors) : errors);
     }
 
+    includeOptions(options) {
+        return [
+            <option value="" key="empty-option">N/A</option>,
+            Object.keys(options).map(k => <option key={options[k].id} value={options[k].id}>{options[k].name}</option>),
+        ];
+    }
+
     renderOptions() {
         if (this.props.masa === {} || this.props.masa.fields === undefined) return null;
         return this.props.masa.fields.map((field, index) => {
@@ -250,7 +257,6 @@ class MASAEvaluation extends Component {
                                         name={field.name}
                                         value={option.value}
                                         onClick={this.onInputChange}
-                                        // onChange={this.onInputChange}
                                         onFocus={this.onInputFocus}
                                         onBlur={this.onInputBlur}/>{' '}
                                     <strong>{option.value}</strong> : {option.name}
@@ -266,20 +272,71 @@ class MASAEvaluation extends Component {
         });
     }
 
-    renderField({ name, placeholder = '', type, value, error, required = false, options = {}, classes = '' }) {
-        let input = (
-            <Input
-                name={name}
-                className={`form-control ${classes}`}
-                placeholder={placeholder}
-                type={type}
-                onChange={this.onInputChange}
-                onFocus={this.onInputFocus}
-                onBlur={this.onInputBlur}
-                value={value}/>
+    renderStaticOptions() {
+        return (
+            <FormGroup tag="fieldset">
+                <legend className="col-form-legend text-primary big-text">Patient Data</legend>
+                {this.renderField({
+                    name: 'patientSelected',
+                    type: 'select',
+                    classes: 'col-xl-6',
+                    value: this.state.patientSelected.value,
+                    error: this.state.patientSelected.error,
+                    options: this.props.patients,
+                })}
+                {this.renderField({
+                    name: 'id',
+                    placeholder: 'Patient id',
+                    type: 'text',
+                    classes: 'col-xl-6',
+                    value: this.state.id.value,
+                    error: this.state.id.error,
+                    required: true,
+                })}
+                {this.renderField({
+                    name: 'name',
+                    placeholder: 'Name',
+                    type: 'text',
+                    classes: 'col-xl-6',
+                    value: this.state.name.value,
+                    error: this.state.name.error,
+                    required: true,
+                })}
+                <div className="form-group">
+                    <Datepicker
+                        selected={this.state.birthdate.value}
+                        value={this.state.birthdate.value}
+                        onChange={this.onDateChange}
+                        onFocus={this.onInputFocus}
+                        onBlur={this.onInputBlur}
+                        className="date-picker"
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                        name="birthdate"
+                        dateFormat="DD/MM/YYYY"
+                        placeholderText="Birthdate"
+                        isClearable
+                    />
+                    <div className="text-sm-left text-danger">
+                        {this.state.birthdate.error ? this.state.birthdate.error : ''}
+                    </div>
+                </div>
+                {this.renderField({
+                    name: 'description',
+                    placeholder: 'Additional data',
+                    type: 'text',
+                    classes: 'col-xl-6',
+                    value: this.state.description.value,
+                    error: this.state.description.error,
+                })}
+            </FormGroup>
         );
-        if (Object.keys(options).length) {
-            input = (
+    }
+
+    renderField({ name, placeholder = '', type, value, error, required = false, options = {}, classes = '' }) {
+        return (
+            <div className={`form-group ${required && error ? 'has-danger' : ''}`}>
                 <Input
                     name={name}
                     className={`form-control ${classes}`}
@@ -288,15 +345,9 @@ class MASAEvaluation extends Component {
                     onChange={this.onInputChange}
                     onFocus={this.onInputFocus}
                     onBlur={this.onInputBlur}
-                    value={value.id}>
-                    <option value="">N/A</option>
-                    {Object.keys(options).map(k => <option key={options[k].id} value={options[k].id}>{options[k].name}</option>)}
+                    value={Object.keys(options).length ? value.id : value}>
+                    {Object.keys(options).length ? this.includeOptions(options) : null}
                 </Input>
-            );
-        }
-        return (
-            <div className={`form-group ${required && error ? 'has-danger' : ''}`}>
-                {input}
                 <div className="text-sm-left text-danger">
                     {error || ''}
                 </div>
@@ -321,63 +372,7 @@ class MASAEvaluation extends Component {
                                                 | Aspiration Category: <strong>{this.state.score.aspirationCategory}</strong></p>
                                         </div>
                                     </FormGroup>
-                                    <FormGroup tag="fieldset">
-                                        <legend className="col-form-legend text-primary big-text">Patient Data</legend>
-                                        {this.renderField({
-                                            name: 'patientSelected',
-                                            type: 'select',
-                                            classes: 'col-xl-6',
-                                            value: this.state.patientSelected.value,
-                                            error: this.state.patientSelected.error,
-                                            options: this.props.patients,
-                                        })}
-                                        {this.renderField({
-                                            name: 'id',
-                                            placeholder: 'Patient id',
-                                            type: 'text',
-                                            classes: 'col-xl-6',
-                                            value: this.state.id.value,
-                                            error: this.state.id.error,
-                                            required: true,
-                                        })}
-                                        {this.renderField({
-                                            name: 'name',
-                                            placeholder: 'Name',
-                                            type: 'text',
-                                            classes: 'col-xl-6',
-                                            value: this.state.name.value,
-                                            error: this.state.name.error,
-                                            required: true,
-                                        })}
-                                        <div className="form-group">
-                                            <Datepicker
-                                                selected={this.state.birthdate.value}
-                                                value={this.state.birthdate.value}
-                                                onChange={this.onDateChange}
-                                                onFocus={this.onInputFocus}
-                                                onBlur={this.onInputBlur}
-                                                className="date-picker"
-                                                showMonthDropdown
-                                                showYearDropdown
-                                                dropdownMode="select"
-                                                name="birthdate"
-                                                dateFormat="DD/MM/YYYY"
-                                                placeholderText="Birthdate"
-                                                isClearable
-                                            />
-                                            <div className="text-sm-left text-danger">
-                                                {this.state.birthdate.error ? this.state.birthdate.error : ''}
-                                            </div>
-                                        </div>
-                                        {this.renderField({
-                                            name: 'description',
-                                            placeholder: 'Additional data',
-                                            type: 'text',
-                                            classes: 'col-xl-6',
-                                            value: this.state.description.value,
-                                            error: this.state.description.error,
-                                        })}
-                                    </FormGroup>
+                                    {this.renderStaticOptions()}
                                     {this.renderOptions()}
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                 </Col>
