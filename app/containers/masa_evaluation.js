@@ -104,7 +104,6 @@ class MASAEvaluation extends Component {
     }
 
     onInputChange(e) {
-        console.log('input change');
         if (e.target.name === 'patientSelected') {
             const patient = this.props.patients[e.target.value];
             this.setState({
@@ -175,7 +174,7 @@ class MASAEvaluation extends Component {
     getAspirationCategory(score) {
         let out = MASA_EVALUATION_CATEGORIES.NORMAL;
         if (score >= 149 && score <= 169) out = MASA_EVALUATION_CATEGORIES.LIGHT;
-        else if (score >= 148 && score <= 141) out = MASA_EVALUATION_CATEGORIES.MODERATE;
+        else if (score >= 141 && score <= 148) out = MASA_EVALUATION_CATEGORIES.MODERATE;
         else if (score <= 140) out = MASA_EVALUATION_CATEGORIES.SEVERE;
         return out;
     }
@@ -189,7 +188,6 @@ class MASAEvaluation extends Component {
     }
 
     manageScore() {
-        console.log('manage score!!');
         const newScore = this.getTotalScore();
         this.setState({
             score: {
@@ -251,7 +249,8 @@ class MASAEvaluation extends Component {
                                         type="radio"
                                         name={field.name}
                                         value={option.value}
-                                        onChange={this.onInputChange}
+                                        onClick={this.onInputChange}
+                                        // onChange={this.onInputChange}
                                         onFocus={this.onInputFocus}
                                         onBlur={this.onInputBlur}/>{' '}
                                     <strong>{option.value}</strong> : {option.name}
@@ -267,11 +266,11 @@ class MASAEvaluation extends Component {
         });
     }
 
-    renderField({ name, placeholder = '', type, value, error, required = false, options = {} }) {
+    renderField({ name, placeholder = '', type, value, error, required = false, options = {}, classes = '' }) {
         let input = (
             <Input
                 name={name}
-                className="form-control"
+                className={`form-control ${classes}`}
                 placeholder={placeholder}
                 type={type}
                 onChange={this.onInputChange}
@@ -283,7 +282,7 @@ class MASAEvaluation extends Component {
             input = (
                 <Input
                     name={name}
-                    className="form-control"
+                    className={`form-control ${classes}`}
                     placeholder={placeholder}
                     type={type}
                     onChange={this.onInputChange}
@@ -315,16 +314,19 @@ class MASAEvaluation extends Component {
                             <form className="form-full" onSubmit={this.onMASASubmitClicked}>
                                 <Col>
                                     <FormGroup tag="fieldset">
-                                        <legend className="col-form-legend text-primary big-text">Test Score</legend>
-                                        <p>Score: <strong>{this.state.score.value}</strong></p>
-                                        <p>Dysphagia Category: <strong>{this.state.score.dysphagiaCategory}</strong>
-                                            | Aspiration Category: <strong>{this.state.score.aspirationCategory}</strong></p>
+                                        <div>
+                                            <legend className="col-form-legend text-primary big-text">Test Score</legend>
+                                            <p>Score: <strong>{this.state.score.value}</strong></p>
+                                            <p>Dysphagia Category: <strong>{this.state.score.dysphagiaCategory}</strong>
+                                                | Aspiration Category: <strong>{this.state.score.aspirationCategory}</strong></p>
+                                        </div>
                                     </FormGroup>
                                     <FormGroup tag="fieldset">
                                         <legend className="col-form-legend text-primary big-text">Patient Data</legend>
                                         {this.renderField({
                                             name: 'patientSelected',
                                             type: 'select',
+                                            classes: 'col-xl-6',
                                             value: this.state.patientSelected.value,
                                             error: this.state.patientSelected.error,
                                             options: this.props.patients,
@@ -333,6 +335,7 @@ class MASAEvaluation extends Component {
                                             name: 'id',
                                             placeholder: 'Patient id',
                                             type: 'text',
+                                            classes: 'col-xl-6',
                                             value: this.state.id.value,
                                             error: this.state.id.error,
                                             required: true,
@@ -341,6 +344,7 @@ class MASAEvaluation extends Component {
                                             name: 'name',
                                             placeholder: 'Name',
                                             type: 'text',
+                                            classes: 'col-xl-6',
                                             value: this.state.name.value,
                                             error: this.state.name.error,
                                             required: true,
@@ -369,6 +373,7 @@ class MASAEvaluation extends Component {
                                             name: 'description',
                                             placeholder: 'Additional data',
                                             type: 'text',
+                                            classes: 'col-xl-6',
                                             value: this.state.description.value,
                                             error: this.state.description.error,
                                         })}
