@@ -2,7 +2,7 @@ import { Col, ListGroup, ListGroupItem, ListGroupItemText, ListGroupItemHeading 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Content from '../components/content';
-import { formatDate } from '../common/utils';
+import { formatDate, getColorForMASASeverity } from '../common/utils';
 import { fetchHistoryItem } from '../actions';
 
 class HistoryItem extends Component {
@@ -17,8 +17,10 @@ class HistoryItem extends Component {
             <Content title={`History Case #${masa._id}`}>
                 <Col xs={12} className="push-down">
                     <h3 className="text-primary"><strong>{masa.patient.id}</strong> - {masa.patient.name}</h3>
-                    <p>Dysphagia Category: <strong>{masa.scoreLabelDisfagia}</strong>
-                        | Aspiration Category: <strong>{masa.scoreLabelAspiracao}</strong></p>
+                    <p>Dysphagia Category: <strong className={getColorForMASASeverity(masa.scoreLabelDisfagia)}>
+                        {masa.scoreLabelDisfagia}</strong>
+                        | Aspiration Category: <strong className={getColorForMASASeverity(masa.scoreLabelAspiracao)}>
+                            {masa.scoreLabelAspiracao}</strong></p>
                     <small className="text-muted">
                         {formatDate(new Date(masa.patient.birthdate))}
                     </small>

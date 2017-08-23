@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/lib/fa';
 import Content from '../components/content';
 import { ROUTES } from '../common/constants';
-import { formatDate } from '../common/utils';
+import { formatDate, getColorForMASASeverity } from '../common/utils';
 import { fetchPatient } from '../actions';
 
 class PatientDetails extends Component {
@@ -21,9 +21,9 @@ class PatientDetails extends Component {
             return (
                 <tr key={_id}>
                     <td>{formatDate(new Date(created))}</td>
-                    <td>{score}</td>
-                    <td>{scoreLabelAspiracao}</td>
-                    <td>{scoreLabelDisfagia}</td>
+                    <td><strong>{score}</strong></td>
+                    <td className={getColorForMASASeverity(scoreLabelDisfagia)}>{scoreLabelDisfagia}</td>
+                    <td className={getColorForMASASeverity(scoreLabelAspiracao)}>{scoreLabelAspiracao}</td>
                     <td>
                         <Link to={`${ROUTES.HISTORY}/${_id}`}>{FaEye()}</Link>
                     </td>

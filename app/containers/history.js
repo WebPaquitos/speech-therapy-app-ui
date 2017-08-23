@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Col, Table } from 'reactstrap';
 import { fetchHistory } from '../actions';
-import { formatDate } from '../common/utils';
+import { formatDate, getColorForMASASeverity } from '../common/utils';
 import Content from '../components/content';
 import { ROUTES } from '../common/constants';
 
@@ -21,9 +21,9 @@ class History extends Component {
                 <tr key={_id}>
                     <td>{formatDate(new Date(created))}</td>
                     <td>{name}</td>
-                    <td>{score}</td>
-                    <td>{scoreLabelAspiracao}</td>
-                    <td>{scoreLabelDisfagia}</td>
+                    <td><strong>{score}</strong></td>
+                    <td className={getColorForMASASeverity(scoreLabelDisfagia)}>{scoreLabelDisfagia}</td>
+                    <td className={getColorForMASASeverity(scoreLabelAspiracao)}>{scoreLabelAspiracao}</td>
                     <td>
                         <Link to={`${ROUTES.HISTORY}/${_id}`}>{FaEye()}</Link>
                     </td>
