@@ -12,7 +12,10 @@ import { getJSONFromStorage } from './common/utils';
 import { STORAGE_KEYS, EMPTY_SESSION, LOG_USER } from './common/constants';
 
 const createStoreWithMiddleware = applyMiddleware(PromiseMiddleware)(createStore);
-const store = createStoreWithMiddleware(reducers);
+const store = createStoreWithMiddleware(
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 const session = getJSONFromStorage(STORAGE_KEYS.SESSION) || EMPTY_SESSION;
 if (session.isLogged) {
