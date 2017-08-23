@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Row, Col, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/lib/fa';
+import Content from '../components/content';
 import { ROUTES } from '../common/constants';
 import { formatDate } from '../common/utils';
 import { fetchPatient } from '../actions';
@@ -35,45 +36,36 @@ class PatientDetails extends Component {
         const { patient } = this.props;
         if (!patient) return <div>Loading...</div>;
         return (
-            <div className="content">
-                <Row>
-                    <Col xs="12">
-                        <h1 className="push-down">Patient Details</h1>
-                        <Row>
-                            <Col xs="12" className="push-down">
-                                <h3 className="text-primary"><strong>{patient.id}</strong> - {patient.name}</h3>
-                                <small className="text-muted">
-                                    {formatDate(new Date(patient.birthdate))}
-                                </small>
-                                <p className="lead">Additional data: {patient.description}</p>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="12">
-                        <h1 className="push-down">Patient Evaluation History</h1>
-                        <Row>
-                            <Col xs="12">
-                                <Table responsive hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Evaluation Date</th>
-                                            <th>Score</th>
-                                            <th>Dysphagia Category</th>
-                                            <th>Aspiration Category</th>
-                                            <th/>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.renderPatientHistory()}
-                                    </tbody>
-                                </Table>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            </div>
+            <Content title="Patient Details">
+                <Col xs={12} className="push-down">
+                    <h3 className="text-primary"><strong>{patient.id}</strong> - {patient.name}</h3>
+                    <small className="text-muted">
+                        {formatDate(new Date(patient.birthdate))}
+                    </small>
+                    <p className="lead">Additional data: {patient.description}</p>
+                </Col>
+                <Col xs={12}>
+                    <h1 className="push-down">Patient Evaluation History</h1>
+                    <Row>
+                        <Col xs="12">
+                            <Table responsive hover>
+                                <thead>
+                                    <tr>
+                                        <th>Evaluation Date</th>
+                                        <th>Score</th>
+                                        <th>Dysphagia Category</th>
+                                        <th>Aspiration Category</th>
+                                        <th/>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.renderPatientHistory()}
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
+                </Col>
+            </Content>
         );
     }
 }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Row, Col, Table } from 'reactstrap';
+import { Col, Table } from 'reactstrap';
 import { FaEye } from 'react-icons/lib/fa';
+import Content from '../components/content';
 import { fetchPatients } from '../actions';
 import { ROUTES } from '../common/constants';
 
@@ -27,29 +28,22 @@ class Patients extends Component {
 
     render() {
         return (
-            <div className="content">
-                <Row>
-                    <Col xs="12">
-                        <h1 className="push-down">Patients</h1>
-                        <Row>
-                            <Col xs="12">
-                                <Table responsive hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Patient name</th>
-                                            <th>Patient data</th>
-                                            <th/>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.renderPatients()}
-                                    </tbody>
-                                </Table>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            </div>
+            <Content title="Patients">
+                <Col>
+                    <Table responsive hover>
+                        <thead>
+                            <tr>
+                                <th>Patient name</th>
+                                <th>Patient data</th>
+                                <th/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderPatients()}
+                        </tbody>
+                    </Table>
+                </Col>
+            </Content>
         );
     }
 }

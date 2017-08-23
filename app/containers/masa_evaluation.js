@@ -1,8 +1,9 @@
 import Datepicker from 'react-datepicker';
 import moment from 'moment';
 import React, { Component } from 'react';
-import { Row, Col, FormGroup, Label, Input } from 'reactstrap';
+import { Col, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
+import Content from '../components/content';
 import { submitMASA, fetchMASAModel, fetchPatients } from '../actions';
 import { ROUTES, MASA_EVALUATION_CATEGORIES } from '../common/constants';
 
@@ -357,30 +358,23 @@ class MASAEvaluation extends Component {
 
     render() {
         return (
-            <div className="content">
-                <Row>
+            <Content title="MASA Evaluation">
+                <form className="form-full" onSubmit={this.onMASASubmitClicked}>
                     <Col>
-                        <h1 className="push-down">MASA Test</h1>
-                        <Row>
-                            <form className="form-full" onSubmit={this.onMASASubmitClicked}>
-                                <Col>
-                                    <FormGroup tag="fieldset">
-                                        <div>
-                                            <legend className="col-form-legend text-primary big-text">Test Score</legend>
-                                            <p>Score: <strong>{this.state.score.value}</strong></p>
-                                            <p>Dysphagia Category: <strong>{this.state.score.dysphagiaCategory}</strong>
-                                                | Aspiration Category: <strong>{this.state.score.aspirationCategory}</strong></p>
-                                        </div>
-                                    </FormGroup>
-                                    {this.renderStaticOptions()}
-                                    {this.renderOptions()}
-                                    <button type="submit" className="btn btn-primary">Submit</button>
-                                </Col>
-                            </form>
-                        </Row>
+                        <FormGroup tag="fieldset">
+                            <div>
+                                <legend className="col-form-legend text-primary big-text">Test Score</legend>
+                                <p>Score: <strong>{this.state.score.value}</strong></p>
+                                <p>Dysphagia Category: <strong>{this.state.score.dysphagiaCategory}</strong>
+                                    | Aspiration Category: <strong>{this.state.score.aspirationCategory}</strong></p>
+                            </div>
+                        </FormGroup>
+                        {this.renderStaticOptions()}
+                        {this.renderOptions()}
+                        <button type="submit" className="btn btn-primary">Submit</button>
                     </Col>
-                </Row>
-            </div>
+                </form>
+            </Content>
         );
     }
 }

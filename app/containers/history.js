@@ -2,9 +2,10 @@ import { FaEye } from 'react-icons/lib/fa';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Row, Col, Table } from 'reactstrap';
+import { Col, Table } from 'reactstrap';
 import { fetchHistory } from '../actions';
 import { formatDate } from '../common/utils';
+import Content from '../components/content';
 import { ROUTES } from '../common/constants';
 
 class History extends Component {
@@ -33,32 +34,25 @@ class History extends Component {
 
     render() {
         return (
-            <div className="content">
-                <Row>
-                    <Col xs="12">
-                        <h1 className="push-down">Evaluation History</h1>
-                        <Row>
-                            <Col xs="12">
-                                <Table responsive hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Evaluation date</th>
-                                            <th>Patient name</th>
-                                            <th>Score</th>
-                                            <th>Dysphagia Category</th>
-                                            <th>Aspiration Category</th>
-                                            <th/>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.renderHistory()}
-                                    </tbody>
-                                </Table>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            </div>
+            <Content title="Evaluation History">
+                <Col>
+                    <Table responsive hover>
+                        <thead>
+                            <tr>
+                                <th>Evaluation date</th>
+                                <th>Patient name</th>
+                                <th>Score</th>
+                                <th>Dysphagia Category</th>
+                                <th>Aspiration Category</th>
+                                <th/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderHistory()}
+                        </tbody>
+                    </Table>
+                </Col>
+            </Content>
         );
     }
 }
