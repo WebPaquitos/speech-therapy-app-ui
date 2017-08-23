@@ -1,6 +1,12 @@
 # Speech Therapy App UI
 
-Report tool for assisting in evaluations.
+Report tool for assisting in speech therapy evaluations.
+This tool now enables the following features:
+- Register / Login / Logout (Session is maintained in localstorage until you logout)
+- Create evaluations (MASA test for now only, but in the future we will add many more)
+- View your patients and your patients details
+- View your history of evaluations performed and details about past evaluations
+
 Technologies used:
 - `react v15.6.1`
 - `redux v3.7.1`
