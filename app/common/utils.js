@@ -16,7 +16,7 @@ export function saveJSONInStorage(key, value) {
     }
 }
 
-export function removeJSONInStorage(key) {
+export function removeJSONFromStorage(key) {
     try {
         localStorage.removeItem(key);
     } catch (e) {

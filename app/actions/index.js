@@ -7,7 +7,7 @@ import {
     FETCH_MASA, FETCH_PATIENTS,
     FETCH_HISTORY_ITEM, FETCH_PATIENT,
 } from '../common/constants';
-import { saveJSONInStorage, removeJSONInStorage } from '../common/utils';
+import { saveJSONInStorage, removeJSONFromStorage } from '../common/utils';
 
 axios.defaults.withCredentials = true;
 
@@ -30,7 +30,7 @@ export function loginUser(values, callback) {
 
 export function logoutUser() {
     axios.get(`${API_ENDPOINT}/logout`);
-    removeJSONInStorage(STORAGE_KEYS.SESSION);
+    removeJSONFromStorage(STORAGE_KEYS.SESSION);
     return {
         type: LOGOUT_USER,
         payload: EMPTY_SESSION,
